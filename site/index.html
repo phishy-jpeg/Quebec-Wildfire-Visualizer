@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Quebec Historic Wildfire Visualizer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.12.0/dist/maplibre-gl.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script type="module" src="js/index.js"></script>
+</head>
+<body>
+    <!------------------- Header ----------------->
+    <header class="site-header">
+        <h1 class="header-title">Quebec Wildfire Visualizer</h1>
+        <nav class="site-nav">
+            <a href="#map-section">Map</a>
+            <a href="data.html">Data</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-------------- Title -------------->
+        <section class="intro" id="page-title">
+            <h1 id="page-title">Quebec Historic Wildfire Visualizer</h1>
+            <p>Explore all recorded wildfires in the province of Quebec since 1976 </p>
+        </section>
+
+        <!---------------- Map division --------------->
+        <section class="content-section map-section" id="map-section">
+            <div class="section-heading">
+                <div>
+                    <h2 id="map-title">Explore fire history</h2>
+                </div>
+                <a class="text-link" href="data.html">Learn about the data used <span>→</span></a>
+            </div>
+            <!------------------ Filter section ----------------->
+            <div id="year-filter" class="filter-panel">
+                <div class="year-entry">
+                    <span id="year-picker-label" class="year-picker-label">Filter by fire year</span>
+                    <details class="year-dropdown">
+                        <summary id="year-dropdown-label">Select years</summary>
+                        <div id="year-options" class="year-options" role="group"></div>
+                    </details>
+                    <button id="clear-year-filter" class="button-secondary" type="button">Clear years</button>
+                </div>
+                <ul id="selected-years" class="selected-years"></ul>
+            </div>
+            <aside class="fire-count-box">
+                <span class="fire-count-title">Total fires</span>
+                <output id="fire-count-value">94,572</output>
+                <span id="fire-count-footer">Across all selected years</span>
+            </aside>
+            <div id="map"></div>
+        </section>
+        <section class="about" id="about">
+            <h1 class="about-title" id="about-title">About this site</h1>
+            <p>Wildfires are becoming increasingly common due to forest mismanagement and climate change. While it is very easy to find online graphs on the increase in wildfires, resources to visualize this spatially is limited. This site aims to be a tool for people interested in conservation, to be able to visualize the effects of wildfires over the years. </p>
+        </section>
+
+    </main>
+
+    <!----------------------------- Footer ----------------------------->
+    <footer class="site-footer">
+        <span>Wildfire Visualizer</span>
+    </footer>
+</body>
+</html>
