@@ -51,13 +51,13 @@ My edge case: A user enters a word rather than a year.
 | Check | Result | What I did |
 | --- | --- | --- |
 | 1. Cold start | pass / fault: ... | fixed in commit "..." / known issue |
-| 2. Read every label | None showed up with a result like null | I clicked on as many labels as I could. Due to the size of my data set I couldnt select everyone |
-| 3. Ask twice | I entered to and from data with the same number twice | Honestly nothing. The site did not update |
-| 4. The edge | I entered invalid years (from 1500 to 3000) | Nothing updated on the map, but a pop up comes up saying "Please enter years from 1885 to 2025" |
-| 5. The data does not come | Um does not work no pop up | I blocked the URL using the network tab |
-| 6. On a phone (size view and my phone) | My website is not live yet| ... |
-| 7. Mouse in my pocket | I tabed throught the filters | YES IT WORKED, and I didn't have to change anything |
-| 8. Accessibility audit | 100% but my site it not yet live so this is not accurate | I tried it in developer tools |
+| 2. Read every label | Half pass: thing showed up with a result like null, but due to the size of my dataset I couldn't click on everything | I didn't have to change anything |
+| 3. Ask twice | Pass: I entered to and from data with the same number twice | Honestly nothing. The site did not update |
+| 4. The edge | Pass: I entered invalid years (from 1500 to 3000) | Nothing updated on the map, but a pop up comes up saying "Please enter years from 1885 to 2025" |
+| 5. The data does not come | Fault: Um does not work no pop up | I need to add someting that will alert the user that the data isn't loading |
+| 6. On a phone (size view and my phone) | Fault: My website is not live yet| not live :( |
+| 7. Mouse in my pocket | Pass: I tabed throught the filters | YES IT WORKED, and I didn't have to change anything |
+| 8. Accessibility audit | Pass: 100% but my site it not yet live so this is not accurate | I tried it in developer tools |
 
 ## Sources
 - Forest fires since 1976: Ministère des Ressources naturelles et des Forêts (MRNF), https://www.donneesquebec.ca/recherche/dataset/feux-de-foret
