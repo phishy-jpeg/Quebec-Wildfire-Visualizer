@@ -1,5 +1,6 @@
 import * as maplibregl from 'https://unpkg.com/maplibre-gl@6.12.0/dist/maplibre-gl.mjs';
 
+// TODO: THIS CODE IS A MESS ORGANIZE IT BETTER 
 // TODO: Add fire filters into the map view so when the map is full screen you can still filter the data
 // TODO: Find another revelant data layer to add to the map
 
@@ -32,57 +33,92 @@ const clearYearFilterButton = document.getElementById('clear-year-filter');
 const yearFilterStatus = document.getElementById('year-filter-status');
 const selectedYearsList = document.getElementById('selected-years');
 const yearOptions = document.getElementById('year-options');
-const yearDropdownLabel = document.getElementById('year-dropdown-label');
+
+const filterToggleButton = document.getElementById('filter-toggle');
+const filterPanel = document.getElementById('filter-panel');
+const yearFilterToggleButton = document.getElementById('year-filter-toggle');
+const yearPanel = document.getElementById('year-panel');
+const sizeFilterToggleButton = document.getElementById('size-filter-toggle');
+const sizePanel = document.getElementById('size-panel');
+const filterHeader = document.getElementById('filter-header-h1');
+
 const fireCountValue = document.getElementById('fire-count-value');
-const selectedYears = new Set();
+const hectaresCountValue = document.getElementById('hectares-count-value');
 const fireLayerIds = ['fires-fill', 'fires-ancien-fill'];
+
 const earliestFireYear = 1885;
 const latestFireYear = 2025;
 // Plus 1 to include both end poits
 const availableYears = Array.from({ length: latestFireYear - earliestFireYear + 1 }, (_, index) => latestFireYear - index);
+const selectedYears = new Set();
 let fireChart;
-const fireCountsByYear = {
-    "1885": 14, "1887": 18, "1890": 129, "1891": 59,
-    "1893": 9, "1894": 313, "1895": 52, "1896": 58,
-    "1900": 314, "1901": 69, "1902": 2, "1903": 82,
-    "1904": 81, "1905": 408, "1906": 775, "1907": 23,
-    "1909": 8, "1910": 354, "1911": 2, "1912": 2,
-    "1913": 10, "1914": 61, "1915": 1139, "1916": 2474,
-    "1917": 5, "1918": 14, "1919": 434, "1920": 1335,
-    "1921": 1282, "1922": 589, "1923": 1343, "1924": 7,
-    "1925": 124, "1926": 1, "1927": 46, "1930": 208,
-    "1931": 1, "1932": 197, "1933": 233, "1934": 17,
-    "1935": 372, "1936": 39, "1937": 42, "1938": 40,
-    "1939": 50, "1940": 531, "1941": 910, "1943": 5,
-    "1944": 229, "1945": 258, "1946": 5, "1947": 157,
-    "1948": 69, "1949": 37, "1950": 462, "1951": 127,
-    "1952": 21, "1953": 284, "1954": 10, "1955": 725,
-    "1956": 24, "1957": 34, "1958": 3,"1959": 56,
-    "1960": 150, "1961": 41, "1962": 288, "1963": 78,
-    "1964": 56, "1965": 54, "1966": 12, "1967": 223,
-    "1968": 106, "1969": 1, "1970": 26, "1971": 480,
-    "1972": 76, "1973": 7, "1974": 32, "1975": 48,
-    "1976": 1340, "1977": 228, "1978": 125, "1979": 126,
-    "1980": 313, "1981": 344, "1982": 172, "1983": 1922,
-    "1984": 180, "1985": 230, "1986": 759, "1987": 284,
-    "1988": 558, "1989": 1203, "1990": 288, "1991": 606,
-    "1992": 216, "1993": 248, "1994": 148, "1995": 1040,
-    "1996": 1822, "1997": 883, "1998": 420, "1999": 201,
-    "2000": 222, "2001": 179, "2002": 2504, "2003": 255,
-    "2004": 46, "2005": 7778, "2006": 669, "2007": 6080,
-    "2008": 89, "2009": 1951, "2010": 22005, "2011": 114,
-    "2012": 2756, "2013": 6156, "2014": 124, "2015": 113,
-    "2016": 234, "2017": 638, "2018": 2977, "2019": 473,
-    "2020": 3615, "2021": 710, "2022": 231, "2023": 16592,
-    "2024": 4108, "2025": 297
-};
 
+async function loadperYearData() {
+    try {
+        const response = await fetch('../site/data/fire_counts_by_year.json');
+        if (!response.ok) {
+            consol.log("!response.ok");
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching per-year data:', error);
+    }
+}
+const perYearData = await loadperYearData();
+
+const fireCountsByYear = Object.fromEntries(
+    Object.entries(perYearData).map(([year, data]) => [year, data.fires])
+);
+
+const hectaresCountByYear = Object.fromEntries(
+    Object.entries(perYearData).map(([year, data]) => [year, data.hectares])
+);
+
+// Expanding filter section, and toggle animations
+filterToggleButton.addEventListener('click', () => {
+    filterPanel.hidden = !filterPanel.hidden;
+    filterHeader.hidden = !filterHeader.hidden;
+    filterToggleButton.classList.toggle('change', !filterPanel.hidden);
+    filterToggleButton.setAttribute('aria-expanded', String(!filterPanel.hidden));
+
+    filterToggleButton.classList.toggle('change', !filterHeader.hidden);
+    filterToggleButton.setAttribute('aria-expanded', String(!filterHeader.hidden));
+});
+filterToggleButton.setAttribute('aria-expanded', String(!filterPanel.hidden));
+filterToggleButton.setAttribute('aria-expanded', String(!filterHeader.hidden));
+
+function updateYearFilterToggleState() {
+    yearFilterToggleButton.setAttribute('aria-expanded', String(!yearPanel.hidden));
+}
+
+// Expanding year selection panel
+yearFilterToggleButton.addEventListener('click', () => {
+    yearPanel.hidden = !yearPanel.hidden;
+    updateYearFilterToggleState();
+});
+updateYearFilterToggleState();
+
+function updateSizeFilterToggleState() {
+    sizeFilterToggleButton.setAttribute('aria-expanded', String(!sizePanel.hidden));
+}
+
+// Expanding size selection panel
+sizeFilterToggleButton.addEventListener('click', () => {
+    sizePanel.hidden = !sizePanel.hidden;
+    updateSizeFilterToggleState();
+});
+updateSizeFilterToggleState();
+
+// Changing the years shown on the map
 yearOptions.replaceChildren(...availableYears.map((year) => {
     const label = document.createElement('label');
     label.className = 'year-option';
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.value = String(year);
+    checkbox.checked = selectedYears.has(year);
     checkbox.addEventListener('change', () => {
         if (checkbox.checked) {
             selectedYears.add(year);
@@ -100,15 +136,17 @@ function updateYearFilter() {
     const fireCount = years.length
         ? years.reduce((total, year) => total + (fireCountsByYear[year] ?? 0), 0)
         : Object.values(fireCountsByYear).reduce((total, count) => total + count, 0);
+    const hectaresCount = years.length
+        ? years.reduce((total, year) => total + (hectaresCountByYear[year] ?? 0), 0)
+        : Object.values(hectaresCountByYear).reduce((total, count) => total + count, 0);
 
-    yearDropdownLabel.textContent = years.length
-        ? `Select years (${years.length} selected)`
-        : 'Select years';
     fireCountValue.textContent = new Intl.NumberFormat().format(fireCount);
+    hectaresCountValue.textContent = new Intl.NumberFormat().format(hectaresCount);
     yearOptions.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         checkbox.checked = selectedYears.has(Number(checkbox.value));
     });
-    selectedYearsList.replaceChildren(...years.map((year) => {
+    const displayedYears = years.length === availableYears.length ? [] : years;
+    selectedYearsList.replaceChildren(...displayedYears.map((year) => {
         const item = document.createElement('li');
         const removeButton = document.createElement('button');
         removeButton.type = 'button';
@@ -122,15 +160,15 @@ function updateYearFilter() {
         item.append(removeButton);
         return item;
     }));
+    updateFireChartSelection();
 
-    if (years.length === 0) {
+    if (years.length === 0 || years.length === availableYears.length) {
         fireLayerIds.forEach((layerId) => {
             if (map.getLayer(layerId)) {
                 map.setFilter(layerId, null);
             }
         });
         yearFilterStatus.textContent = 'Showing fires from all years.';
-        updateFireChartSelection();
         return;
     }
 
@@ -151,11 +189,11 @@ function updateYearFilter() {
         }
     });
     yearFilterStatus.textContent = `Showing fires for ${years.join(', ')}.`;
-    updateFireChartSelection();
 }
 
 clearYearFilterButton.addEventListener('click', () => {
     selectedYears.clear();
+    availableYears.forEach((year) => selectedYears.add(year));
     updateYearFilter();
 });
 
@@ -178,34 +216,34 @@ map.on('load', () => {
         }
     });
     // fires layer
-    map.addSource('fires', {
+    map.addSource('filtered_feux', {
         type: 'vector',
         url: 'http://127.0.0.1:3000/filtered_feux'
     });
     map.addLayer({
         id: 'fires-fill',
         type: 'fill',
-        source: 'fires',
+        source: 'filtered_feux',
         'source-layer': 'filtered_feux',
         paint: {
             'fill-color': '#ff0000',
-            'fill-opacity': 0.3,
+            'fill-opacity': 1,
             'fill-outline-color': '#4f0000'
         }
     });
     // Adding ancient fire layers
-    map.addSource('fires-ancien', {
+    map.addSource('filtered_feux_ancien', {
         type: 'vector',
         url: 'http://127.0.0.1:3000/filtered_feux_ancien'
     });
     map.addLayer({
         id: 'fires-ancien-fill',
         type: 'fill',
-        source: 'fires-ancien',
+        source: 'filtered_feux_ancien',
         'source-layer': 'filtered_feux_ancien',
         paint: {
             'fill-color': '#ff0000',
-            'fill-opacity': 0.3,
+            'fill-opacity': 1,
             'fill-outline-color': '#4f0000'
         }
     });
@@ -270,24 +308,75 @@ map.on('load', () => {
 //*******************************************************************************
 // Creating the graoh 
 //******************************************************************************* 
-const fireYears = Object.keys(fireCountsByYear).map(Number).sort((a, b) => a - b);
+function getSelectedFireYears() {
+    const yearsToShow = selectedYears.size === 0
+        ? availableYears
+        : [...selectedYears];
+
+    return yearsToShow
+        .filter((year) =>
+            Object.hasOwn(fireCountsByYear, year) &&
+            Object.hasOwn(hectaresCountByYear, year)
+        )
+        .sort((a, b) => a - b);
+}
+
+function updateFireChartSelection() {
+    if (!fireChart) return;
+
+    const years = getSelectedFireYears();
+    fireChart.data.labels = years;
+    fireChart.data.datasets[0].data = years.map((year) => fireCountsByYear[year]);
+    fireChart.data.datasets[1].data = years.map((year) => hectaresCountByYear[year]);
+    fireChart.update();
+}
+
+const fireYears = getSelectedFireYears();
+const fireHectares = fireYears.map((year) => hectaresCountByYear[year]);
+
 const fireGraphCanvas = document.getElementById('fire-graph');
+
 fireChart = new Chart(fireGraphCanvas, {
     type: 'bar',
     data: {
         labels: fireYears,
-        datasets: [{
+        datasets: [
+            {
             label: 'Recorded fires',
             data: fireYears.map((year) => fireCountsByYear[year]),
             backgroundColor: fireYears.map(() => '#1f2d5a'),
             borderColor: '#142756',
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction: {
+            borderWidth: 1,
+            yAxisID: 'y'
+            },
+            {
+            label: 'Hectares burned',
+            data: fireHectares,
+            backgroundColor: fireYears.map(() => '#400002'),
+            borderColor: '#400002',
+            borderWidth: 1,
+            yAxisID: 'y1'
+            }
+        ]}, 
+        options: {
+            responsive: true,
+            onClick: (event, activeElements, chart) => {
+                // If use didnt click ie. not active elements do not continue
+                if (activeElements.length === 0) return;
+
+                // Creating 
+                const year = Number(chart.data.labels[activeElements[0].index]);
+
+                // Changing the selected years to match the year clicked
+                selectedYears.clear();
+                selectedYears.add(year);
+                updateYearFilter();
+            
+                // Switching to the map tab
+                document.getElementById('map-tab').click();
+            },
+            maintainAspectRatio: false,
+            interaction: {
             intersect: false,
             mode: 'index'
         },
@@ -297,7 +386,7 @@ fireChart = new Chart(fireGraphCanvas, {
             },
             title: {
                 display: true,
-                text: 'Recorded wildfires by year'
+                text: 'Recorded wildfires and Total Hectares Burned by year'
             }
         },
         scales: {
@@ -309,22 +398,24 @@ fireChart = new Chart(fireGraphCanvas, {
             },
             y: {
                 beginAtZero: true,
+                position: 'left',
                 title: {
                     display: true,
                     text: 'Number of fires'
+                }
+            },
+            y1: {
+                beginAtZero: true,
+                position: 'right',
+                title: {
+                    display: true,
+                    text: 'Hectares burned'
                 }
             }
         }
     }
 });
 
-function updateFireChartSelection() {
-    if (!fireChart) return;
-    fireChart.data.datasets[0].backgroundColor = fireYears.map((year) =>
-        selectedYears.size === 0 || selectedYears.has(year) ? '#1f2d5a' : '#cbd2e2'
-    );
-    fireChart.update();
-}
 // **********************************************************************************************
 // MAP LEGEND
 // **********************************************************************************************
@@ -334,23 +425,27 @@ function updateFireChartSelection() {
 // **********************************************************************************************
 const tabButtons = document.querySelectorAll('.tablinks');
 const tabPanels = document.querySelectorAll('.tab-content');
+const chart = document.querySelectorAll('.graph');
 
-tabButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-        const activePanelId = button.dataset.tab;
-        tabButtons.forEach((tabButton) => {
-            const isActive = tabButton === button;
-            tabButton.classList.toggle('active', isActive);
-            tabButton.setAttribute('aria-selected', String(isActive));
-        });
-        tabPanels.forEach((panel) => {
-            panel.classList.toggle('active', panel.id === activePanelId);
-        });
+function changeTab(event) {
+    const clickedTabButton = event.currentTarget;
+    const activePanelId = clickedTabButton.dataset.tab;
 
-        if (activePanelId === 'map') {
-            map.resize();
-        } else if (activePanelId === 'graph') {
-            fireChart.resize();
-        }
+    tabButtons.forEach((tabButton) => {
+        const isActive = tabButton === clickedTabButton;
+        tabButton.classList.toggle('active', isActive);
+        tabButton.setAttribute('aria-selected', String(isActive));
     });
+    tabPanels.forEach((panel) => {
+        panel.classList.toggle('active', panel.id === activePanelId);
+    });
+
+    if (activePanelId === 'map') {
+        map.resize();
+    } else if (activePanelId === 'graph') {
+        fireChart.resize();
+    }
+}
+tabButtons.forEach((button) => {
+    button.addEventListener('click', changeTab);
 });

@@ -30,36 +30,65 @@
         <section class="content-section map-section" id="map-section">
             <div class="section-heading">
                 <h2 id="map-title">Explore fire history</h2>
-                <aside class="fire-count-box">
-                    <span class="fire-count-title">Total fires</span>
-                    <output id="fire-count-value">94,572</output>
-                    <span id="fire-count-footer">Across all selected years</span>
-                </aside>
-            </div>
-            <!------------------ Filter section ----------------->
-            <div id="year-filter" class="filter-panel">
-                <div class="year-entry">
-                    <span id="year-picker-label" class="year-picker-label">Filter by fire year</span>
-                    <details class="year-dropdown">
-                        <summary id="year-dropdown-label">Select years</summary>
-                        <div id="year-options" class="year-options" role="group"></div>
-                    </details>
-                    <button id="clear-year-filter" class="button-secondary" type="button">Clear years</button>
-                </div>
-                <ul id="selected-years" class="selected-years"></ul>
-                <p id="year-filter-status" class="map-hint"></p>
             </div>
 
-                    <!---------------- TAB LINKS ---------------->
+
+            <!---------------- TAB LINKS ---------------->
             <div class="tab" id="tab" role="tablist" aria-label="Fire visualization">
                 <button class="tablinks active" id="map-tab" type="button" role="tab" aria-selected="true" data-tab="map">Map</button>
                 <button class="tablinks" id="graph-tab" type="button" role="tab" aria-selected="false" data-tab="graph">Graph</button>
             </div>
-                <div id="map" class="tab-content active" role="tabpanel"></div>
-                <div id="graph" class="tab-content" role="tabpanel">
-                    <canvas id="fire-graph" role="img"></canvas>
+            <!-----------------MAP SECTION -------------------->
+            <div id="map" class="tab-content active" role="tabpanel">
+                <!---------------- FILTERS SECTION ------------------->
+                <div id="map-filters" class="map-filter">
+                    <div id="toggle-header" class="toggler-header">
+                        <h1 id="filter-header-h1" class="filter-header-h1" aria-controls="filter-panel" aria-expanded="false" hidden> Filters</h1>
+                        <button id="filter-toggle" class="filter-toggle" type="button" aria-label="Toggle filters" aria-expanded="false" aria-controls="filter-panel">
+                            <div class="bar1"></div>
+                            <div class="bar2"></div>
+                            <div class="bar3"></div>
+                        </button>
+                    </div>
+                    <div id="filter-panel" class="filter-panel" hidden>
+                        <div id="year-filter-section" class="filter-section">
+                            <button id="year-filter-toggle" class="panel-item" type="button" aria-expanded="false" aria-controls="year-panel">
+                                <span>Filter by year ⬇</span>
+                            </button>
+                            <div id="year-panel" class="filter-panel-item" aria-controls="filter-panel" aria-expanded="false"  hidden>
+                                <ul id="year-options" class="year-options"></ul>
+                                <ul id="selected-years" class="selected-years" aria-label="Selected years"></ul>
+                                <button id="clear-year-filter" class="button-secondary" type="button">Show all years</button>
+                                <div class="fire-statistics">
+                                    <aside class="fire-count-box">
+                                        <span class="fire-count-title">Total fires</span>
+                                        <output id="fire-count-value">113,032</output>
+                                        <span class="fire-count-footer">Across selected years</span>
+                                    </aside>
+                                    <aside class="hectares-count-box">
+                                        <span class="fire-count-title">Total hectares burned</span>
+                                        <output id="hectares-count-value">30,407,601.3</output>
+                                        <span class="fire-count-footer">Across selected years</span>
+                                    </aside>
+                                </div>                                
+                                <p id="year-filter-status" class="map-hint" aria-live="polite"></p>
+                            </div>
+                        </div>
+                        <div class="filter-section">
+                            <button id="size-filter-toggle" class="panel-item" type="button" aria-expanded="false" aria-controls="size-panel">
+                                <span>Filter by size ⬇</span>
+                            </button>
+                            <div id="size-panel" class="size-panel" hidden>
+                                <p class="map-hint">Size filters will be available here.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div id="legend" class="legend"></div>
+            </div>
+            <div id="graph" class="tab-content" role="tabpanel">
+                <canvas id="fire-graph" role="img"></canvas>
+            </div>
+            <div id="legend" class="legend"></div>
         </section>
         <section class="about" id="about">
             <h1 class="about-title" id="about-title">About this site</h1>

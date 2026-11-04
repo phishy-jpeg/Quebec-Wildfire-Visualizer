@@ -129,138 +129,78 @@ main {
     color:var(--muted);
 }
 
-.filter-panel {
+/* Filter button design */
+.map-filter {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 4;
+}
+.toggler-header {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.65rem;
-    margin-bottom: 0.85rem;
-}
-
-.year-entry {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.65rem;
-    width: 100%;
-}
-
-.year-picker-label {
-    font-weight: 650;
-}
-
-.year-entry > button,
-.year-dropdown summary {
-    min-height: 2.65rem;
-    padding: 0.55rem 0.8rem;
-    border: 1px solid #b8c1d2;
+    background: white;
+    box-shadow: 0 2px 8px rgb(20 39 86 / 18%);
     border-radius: 0.45rem;
-    font: inherit;
-}
-
-.year-dropdown {
-    position: relative;
-}
-
-.year-dropdown summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.25rem;
-    min-width: 12rem;
-    color: var(--text);
-    background: #fff;
-    font-weight: 550;
-    cursor: pointer;
-    list-style: none;
-}
-
-.year-dropdown summary::-webkit-details-marker {
-    display: none;
-}
-
-.year-dropdown summary::after {
-    content: "▾";
-    color: var(--muted);
-}
-
-.year-dropdown[open] summary::after {
-    content: "▴";
-}
-
-.year-options {
-    position: absolute;
-    top: calc(100% + 0.35rem);
-    left: 0;
-    z-index: 5;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(3.5rem, 1fr));
-    gap: 0.15rem 0.35rem;
-    width: min(22rem, calc(100vw - 3rem));
-    max-height: 17rem;
-    overflow-y: auto;
-    padding: 0.6rem;
+    padding: 0;
     border: 1px solid var(--border);
-    border-radius: 0.55rem;
-    background: #fff;
+    border-radius: 0.45rem;
+}
+#toggle-header h1 {
+    color: black;
+}
+.toggle-header-h1[hidden] {
+    display:none;
+}
+.filter-toggle {
+margin-left: auto;
+  display: flex;
+  width: 47px;
+  height: 47px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.bar1, .bar2, .bar3 {
+  width: 30px;
+  height: 5px;
+  background-color: #333;
+  margin: 4px 0;
+  transition: 0.4s;
+}
+
+.change .bar1 {
+  transform: translate(0, 13px) rotate(-45deg);
+}
+.change .bar2 {opacity: 0;}
+
+.change .bar3 {
+  transform: translate(0, -13px) rotate(45deg);
+}
+
+.filter-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  width: min(20rem, calc(100vw - 3rem));
+  margin-top: 0.5rem;
+  padding: 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  background: rgb(255 255 255 / 95%);
+  box-shadow: 0 8px 24px rgb(20 39 86 / 18%);
+}
+
+.filter-panel[hidden] {
+  display: none;
+}
+
+.filter-section {
+    background: white;
     box-shadow: 0 8px 24px rgb(20 39 86 / 18%);
 }
 
-.year-option {
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-    min-height: 2rem;
-    padding: 0.25rem;
-    border-radius: 0.3rem;
-    color: var(--text);
-    font-size: 0.9rem;
-    cursor: pointer;
-}
-
-.year-option:hover {
-    background: var(--accent-light);
-}
-
-.year-option input {
-    width: 1rem;
-    height: 1rem;
-    margin: 0;
-    accent-color: var(--accent);
-}
-
-.year-entry > button {
-    border-color: var(--accent);
-    color: #fff;
-    background: var(--accent);
-    font-weight: 650;
-    cursor: pointer;
-}
-
-.year-entry > button:hover {
-    background: #293e78;
-}
-
-.year-entry > .button-secondary {
-    color: var(--accent);
-    background: #fff;
-}
-
-.year-entry > .button-secondary:hover {
-    background: var(--accent-light);
-}
-
-
-
-.selected-years {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
 
 .year-chip {
     min-height: 2rem;
@@ -275,15 +215,26 @@ main {
     cursor: pointer;
 }
 
+.filter-panel-item {
+    overflow: scroll;
+    height:400px;
+}
 .year-chip:hover {
     border-color: var(--accent);
     background: #dce4f7;
 }
 
-.fire-count-box {
-    display: inline-grid;
+.fire-statistics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.fire-count-box,
+.hectares-count-box {
+    display: inline-flexbox;
     grid-template-columns: auto auto;
-    align-items: center;
+    align-items: left;
     gap: 0.15rem 0.75rem;
     margin: 0;
     padding: 0.8rem 1rem;
@@ -295,22 +246,23 @@ main {
 
 .fire-count-title {
     color: var(--muted);
-    font-size: 0.9rem;
-    font-weight: 650;
+    font-size: 0.5rem;
+    font-weight: 400;
 }
 
-#fire-count-value {
+#fire-count-value,
+#hectares-count-value {
     color: var(--accent);
-    font-size: 1.5rem;
-    font-weight: 800;
+    font-size: 0.9rem;
+    font-weight: 500;
     font-variant-numeric: tabular-nums;
     text-align: right;
 }
 
-#fire-count-footer {
+.fire-count-footer {
     grid-column: 1 / -1;
     color: var(--muted);
-    font-size: 0.85rem;
+    font-size: 0.5em;
 }
 
 #map, #graph{
@@ -388,9 +340,6 @@ main {
     font-size: 0.9rem;
 }
 
-.site-footer a {
-    color: inherit;
-}
 /* Style the tab */
 .tab {
   overflow: hidden;
