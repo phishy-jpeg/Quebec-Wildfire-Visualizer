@@ -50,7 +50,7 @@ My edge case: A user enters a word rather than a year.
 ## Pre-flight report 
 | Check | Result | What I did |
 | --- | --- | --- |
-| 1. Cold start | pass / fault: ... | fixed in commit "..." / known issue |
+| 1. Cold start | Pass | No errors appeared in the cold start. No need to updated anything |
 | 2. Read every label | Half pass: thing showed up with a result like null, but due to the size of my dataset I couldn't click on everything | I didn't have to change anything |
 | 3. Ask twice | Pass: I entered to and from data with the same number twice | Honestly nothing. The site did not update |
 | 4. The edge | Pass: I entered invalid years (from 1500 to 3000) | Nothing updated on the map, but a pop up comes up saying "Please enter years from 1885 to 2025" |
