@@ -28,6 +28,26 @@ This site is limited, and will likely not included the following functions even 
 - Visualization of fires outside quebec
     - The site aims to be for residents of quebec. The site will try to maintain quality of a small amount of data, with improved functions, before increasing the quantity of data. 
 
+## After My Demo
+During my demo I got some good ideas on things to implement and change about my website. The things I would like to change and add are: 
+- A corresponding graph showing the number of fires per year to go with the map. 
+- A better UI for selecting the years.
+- Some sort of layer with relevent data to compare the forest fire data to. 
+
+## A3 feature: Allowing the user to enter dates by text input
+For A3 I will allow the user to enter the years through text input rather than through clicking on check marks. 
+It has depth because it gives user better control of the map, and adds functionality. With the check click, the site is pretty much not functional at all.
+I know it works when I try it and the fires update on the map, and the years shown checks display on the map. 
+My edge case: A user enters a word rather than a year.
+
+## Test Edge Cases
+| Test Case | Result | What Happened | 
+|-----------|--------|---------------|
+| 1. User does not enter an int | Passed | A warning pops up saying the user must enter a valid year| 
+| 2. The user enters a from year that is higher than the to year | Passed | A warning pops up saying the user must enter a to year that is larger than the from year | 
+| 3. A user enters an invalid year | Passed | A pop up comes up telling the user what the valid years are | 
+
+
 ## Sources
 - Forest fires since 1976: Ministère des Ressources naturelles et des Forêts (MRNF), https://www.donneesquebec.ca/recherche/dataset/feux-de-foret
     - License: CC BY 4.0.
