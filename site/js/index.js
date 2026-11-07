@@ -30,6 +30,12 @@ const map = new maplibregl.Map({
     attributionControl: { compact: false },
 });
 
+const scale = new ScaleControl({
+  unit: 'metric'       
+});
+
+map.addControl(scale, 'bottom-left');
+
 // LOADING MAP LAYERS
 map.on('load', () => {
     // Border layer
