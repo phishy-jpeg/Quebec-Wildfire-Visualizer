@@ -16,11 +16,23 @@ const fireUrl = new URL('../data/FEUX_PROV.pmtiles', import.meta.url).href;
 const fireAnciensUrl = new URL('../data/FEUX_ANCIENS_PROV.pmtiles', import.meta.url).href;
 
 // Creating base map object with maplibre 
+
 const map = new maplibregl.Map({
-  container: "map",
-  zoom: 4, 
-  center: [-70, 53],
-  style: "https://tiles.openfreemap.org/styles/dark",
+    container: "map",
+    zoom: 4, 
+    center: [-70, 53],
+    style: {
+        version: 8,
+        sources: {
+        "raster-tiles": {
+            type: "raster",
+            tiles: ["https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2025_3857/default/g/{z}/{y}/{x}.jpg"],
+            tileSize: 256,
+            attribution: "<a href=\"https://cloudless.eox.at\">EOxCloudless</a> by EOX IT Services GmbH (Contains modified Copernicus Sentinel data 2025)",
+        },
+        },
+        layers: [{ id: "raster-layer", type: "raster", source: "raster-tiles" }],
+    },
 });
 
 // LOADING MAP LAYERS
