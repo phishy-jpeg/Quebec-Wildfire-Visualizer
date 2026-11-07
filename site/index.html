@@ -4,44 +4,28 @@
     <title>Quebec Historic Wildfire Visualizer</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Import for maplibre style -->
     <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.12.0/dist/maplibre-gl.css">
     <link rel="stylesheet" href="css/index.css">
     <!-- PMTiles protocol handler -->
     <script src="https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
+    <!-- Import for my own js -->
     <script type="module" src="js/index.js"></script>
 </head>
-<body>
+<body class="map-page">
     <!------------------- Header ----------------->
     <header class="site-header">
         <h1 class="header-title">Quebec Wildfire Visualizer</h1>
         <nav class="site-nav">
-            <a href="#map-section">Map</a>
+            <a href="index.html">Map</a>
+            <a href="graphs.html">Graphs</a>
             <a href="data.html">Data</a>
+            <a href="about.html">About</a>
         </nav>
     </header>
 
-    <main>
-        <!-------------- Title -------------->
-        <!---<section class="intro" id="page-title">
-            <h1 id="page-title">Quebec Historic Wildfire Visualizer</h1>
-            <p>Explore all recorded wildfires in the province of Quebec since 1976 </p>
-        </section>--->
-
-        <!---------------- Map division --------------->
-        <section class="content-section map-section" id="map-section">
-            <div class="section-heading">
-                <h2 id="map-title">Explore fire history</h2>
-            </div>
-
-
-            <!---------------- TAB LINKS ---------------->
-            <div class="tab" id="tab" role="tablist" aria-label="Fire visualization">
-                <button class="tablinks active" id="map-tab" type="button" role="tab" aria-selected="true" data-tab="map">Map</button>
-                <button class="tablinks" id="graph-tab" type="button" role="tab" aria-selected="false" data-tab="graph">Graph</button>
-            </div>
-            <!-----------------MAP SECTION -------------------->
-            <div id="map" class="tab-content active" role="tabpanel">
+    <main class="map-layout">
+        <div id="map">
                 <!---------------- FILTERS SECTION ------------------->
                 <div id="map-filters" class="map-filter">
                     <div id="toggle-header" class="toggler-header">
@@ -66,7 +50,11 @@
                                     <button id="apply-year-range" class="button-secondary" type="button">Apply range</button>
                                     <p id="year-filter-status" role="status" aria-live="polite"></p>
                                 </div>
+                                <label class="year-search-label" for="year-search">Find a year</label>
+                                <input id="year-search" class="year-search" type="search" inputmode="numeric" placeholder="Search years">
+                                <p id="year-selection-count" class="year-selection-count" aria-live="polite"></p>
                                 <ul id="year-options" class="year-options"></ul>
+                                <button id="clear-year-selection" class="button-secondary" type="button">Clear selection</button>
                                 <button id="clear-year-filter" class="button-secondary" type="button">Show all years</button>
                                 <div class="fire-statistics">
                                     <!--- TODO: why do I even have this in the html???? Make it purely a js function -->
@@ -93,21 +81,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="graph" class="tab-content" role="tabpanel">
-                <canvas id="fire-graph" role="img"></canvas>
-            </div>
-            <div id="legend" class="legend"></div>
-        </section>
-        <section class="about" id="about">
-            <h1 class="about-title" id="about-title">About this site</h1>
-            <p>Wildfires are becoming increasingly common due to forest mismanagement and climate change. While it is very easy to find online graphs on the increase in wildfires, resources to visualize this spatially is limited. This site aims to be a tool for people interested in conservation, to be able to visualize the effects of wildfires over the years. </p>
-        </section>
+        </div>
     </main>
-
-    <!----------------------------- Footer ----------------------------->
-    <footer class="site-footer">
-        <span>Wildfire Visualizer</span>
-    </footer>
 </body>
 </html>

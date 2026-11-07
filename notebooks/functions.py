@@ -27,10 +27,15 @@ def file_to_cleaned_geoJSON(file_name, layer, columns_to_drop):
     return f"{file_name.split('.')[0]}.geojson"
 
 # To creating pmtiles using tippecanoe 
+# Make sure you have already installed tippecanoe on your machine.
+# This will take a while, and the file will be large. I limited the zoom to 17, but you can go further the file will just be much larger.
 def geoJSON_to_pmtiles(geojson_file):
     subprocess.run(
         [
             "tippecanoe",
+            "--projection=EPSG:4326",
+            "-z17", 
+            "-Z4",
             "-o",
             f"{geojson_file.split('.')[0]}.pmtiles",
             geojson_file,

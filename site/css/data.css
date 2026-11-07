@@ -1,0 +1,85 @@
+:root {
+    font-family: Tahoma, Verdana, sans-serif;
+    color: #202020;
+    background: #f5f6f8;
+}
+
+.site-header {
+    color: #202020;
+    background: #fff;
+    border-bottom: 1px solid #e1e4e9;
+    box-shadow: none;
+}
+
+.header-title {
+    margin: 0;
+}
+
+.site-header a {
+    color: #202020;
+    text-decoration: none;
+}
+
+.site-header a:hover {
+    color: #000;
+    background: #edf0f7;
+}
+
+.data-page {
+    max-width: 860px;
+    margin: clamp(2rem, 8vw, 5rem) auto;
+    background: #fff;
+    border-left: 4px solid #202020;
+    box-shadow: 0 8px 28px rgb(20 39 86 / 8%);
+    padding: 0 0 1rem;
+}
+.intro {
+    margin: 0 0 1.5rem;
+    padding: 1.5rem 1.5rem 0;
+}
+
+.data-page .intro h1 {
+    color: #111;
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+}
+
+.data-page .intro p,
+.source-list span,
+.source-note {
+    color: #303030;
+    line-height: 1.65;
+}
+
+.source-list a,
+.source-note a {
+    color: #111;
+}
+.list-item {
+    box-shadow:  0px 4px 10px rgba(0, 0, 0, 0.15);
+    margin: 0 2rem 0.5rem 0;
+    padding: 1rem;
+    padding-left: 1.5rem;
+    border-radius: 0.45rem;
+}
+
+.source-note {
+    margin: 1.5rem;
+}
+
+
+@media (max-width: 600px) {
+    .site-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.85rem 1rem;
+    }
+
+    .site-nav {
+        flex-wrap: wrap;
+    }
+
+    .data-page {
+        margin: 1.5rem 1rem;
+    }
+}
