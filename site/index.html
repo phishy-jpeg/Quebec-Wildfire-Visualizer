@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.12.0/dist/maplibre-gl.css">
     <link rel="stylesheet" href="css/index.css">
+    <!-- PMTiles protocol handler -->
+    <script src="https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
     <script type="module" src="js/index.js"></script>
 </head>
@@ -56,10 +58,18 @@
                                 <span>Filter by year ⬇</span>
                             </button>
                             <div id="year-panel" class="filter-panel-item" aria-controls="filter-panel" aria-expanded="false"  hidden>
+                                <div class="year-range-filter">
+                                    <label for="year-filter-input-from">View years from</label>
+                                    <input type="number" id="year-filter-input-from" class="year-filter-input" placeholder="From year"/>
+                                    <label for="year-filter-input-to">to</label>
+                                    <input type="number" id="year-filter-input-to" class="year-filter-input" placeholder="To year"/>
+                                    <button id="apply-year-range" class="button-secondary" type="button">Apply range</button>
+                                    <p id="year-filter-status" role="status" aria-live="polite"></p>
+                                </div>
                                 <ul id="year-options" class="year-options"></ul>
-                                <ul id="selected-years" class="selected-years" aria-label="Selected years"></ul>
                                 <button id="clear-year-filter" class="button-secondary" type="button">Show all years</button>
                                 <div class="fire-statistics">
+                                    <!--- TODO: why do I even have this in the html???? Make it purely a js function -->
                                     <aside class="fire-count-box">
                                         <span class="fire-count-title">Total fires</span>
                                         <output id="fire-count-value">113,032</output>
@@ -71,7 +81,6 @@
                                         <span class="fire-count-footer">Across selected years</span>
                                     </aside>
                                 </div>                                
-                                <p id="year-filter-status" class="map-hint" aria-live="polite"></p>
                             </div>
                         </div>
                         <div class="filter-section">

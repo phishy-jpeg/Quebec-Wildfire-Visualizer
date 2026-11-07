@@ -219,6 +219,33 @@ margin-left: auto;
     overflow: scroll;
     height:400px;
 }
+
+.year-range-filter {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 0.4rem 0.6rem;
+    padding: 0.75rem;
+}
+
+.year-filter-input {
+    width: 100%;
+    min-width: 0;
+    padding: 0.4rem;
+}
+
+#apply-year-range,
+#year-filter-status {
+    grid-column: 1 / -1;
+}
+
+#year-filter-status {
+    min-height: 1.2em;
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
 .year-chip:hover {
     border-color: var(--accent);
     background: #dce4f7;

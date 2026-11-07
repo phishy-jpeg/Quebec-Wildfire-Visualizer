@@ -1,28 +1,70 @@
+from pathlib import Path
+import subprocess 
+
 import geopandas as gpd 
 import numpy as np 
 import pandas as pd
 
-# TODO: Create all the functions I need to just be able to run this and have the website created
-# TODO: Automatically download the neede data from the internet and parse it 
+def file_to_cleaned_geoJSON(file_name, layer, columns_to_drop):
+    # Reading the gpkg file
+    file = gpd.read_file(file_name, layer=layer)
 
-# Function to project a file, drop unnescary columns, and resave as a geoJSON
-def shp_to_geoJSON(file_name, columns):
-
-    # Changing the file to right projection
-    file = gpd.read_file(file_name)
-    if file.crs != 4632:
-        file = file.to_crs(epsg=4632)
-    # Deleting all columns that need to be dropped
-    for column in columns:
+    # Dropping the unnescary columnd
+    for column in columns_to_drop:
         file = file.drop(
             columns=[column]
         )
-    # Saving as a geoJSON
-    file.to_file("../site/data/clean_file.geojson", driver="GeoJSON")
+    # Changing the projection 
+    if file.crs != 4326:
+        file = file.to_crs(epsg=4326)
 
-# Function to project a file, drop unescary columns but save as a gpkg
-def gpkg_cleaner(file_name, columns):
-    file = gpd.read_file(file_name)
-    # Changing to correct projection (if were making vector tiles out of this it wil be projected later)
-    if file.crs != 3857:
-        file = file.to_crs(epsg=3857)
+    # Simpliying the geometry 
+    file = file.simplify(0.01)
+
+    # Saving the file as a geoJSON 
+    file.to_file(f"{file_name.split('.')[0]}.geojson", driver="GeoJSON", index=False)
+
+    return f"{file_name.split('.')[0]}.geojson"
+
+# To creating pmtiles using tippecanoe 
+def geoJSON_to_pmtiles(geojson_file):
+    subprocess.run(
+        [
+            "tippecanoe",
+            "-o",
+            f"{geojson_file.split('.')[0]}.pmtiles",
+            geojson_file,
+        ],
+        check=True,
+    )
+
+def main():
+
+    data_dir = Path(__file__).resolve().parents[1] / "site" / "data"
+
+    # Cleaning the FEUX_PROV file
+    # Download feux_prov.gpkg from https://www.donneesquebec.ca/recherche/fr/dataset/feux-de-foret/resource/0e7f1c3b-5d8a-4f2e-9c6e-0f1b5e3c6f1a, and save under site/data
+    file_name = str(data_dir / "FEUX_PROV.gpkg")
+    layer = "FEUX_PROV"
+
+    columns_to_drop = ["geoc_fmj", "origine", "an_origine", "perturb", "an_perturb", "met_at_str", "shape_length", "shape_area"]
+
+    geojson_file = file_to_cleaned_geoJSON(file_name, layer, columns_to_drop)
+
+    # Creating pmtiles using tippecanoe 
+    geoJSON_to_pmtiles(geojson_file)
+
+    # Cleaning the FEUX_PROV_ANCIEN file
+    # Download the feux_anciens_prov.gpkg from https://www.donneesquebec.ca/recherche/fr/dataset/feux-de-foret/resource/0e7f1c3b-5d8a-4f2e-9c6e-0f1b5e3c6f1a, and save under site/date
+    file_name = str(data_dir / "FEUX_ANCIENS_PROV.gpkg")
+    layer = "FEUX_ANCIENS_PROV"
+
+    columns_to_drop = ["geoc_fan", "origine", "an_origine", "met_at_str", "shape_length", "shape_area"]
+
+    geojson_file = file_to_cleaned_geoJSON(file_name, layer, columns_to_drop)
+
+    # Creating pmtiles using tippecanoe 
+    geoJSON_to_pmtiles(geojson_file)
+
+if __name__ == "__main__":
+    main() 
