@@ -12,38 +12,12 @@ import { initializeYearFilter } from './year-filter.js';
 // Registering the map with pmtiles protocol
 const protocol = new pmtiles.Protocol();
 maplibregl.addProtocol("pmtiles", protocol.tile);
+
 // Creating consts for the pmtiles url
 const fireUrl = new URL('../data/FEUX_PROV.pmtiles', import.meta.url).href;
 const fireAnciensUrl = new URL('../data/FEUX_ANCIENS_PROV.pmtiles', import.meta.url).href;
 const fireLayerIds = ['fires-fill', 'fires-ancien-fill'];
-let selectedFireYears = [];
-let availableFireYears = [];
-let fireLayersLoaded = false;
 
-function updateMapYearFilter(years, allYears = availableFireYears) {
-    selectedFireYears = years;
-    availableFireYears = allYears;
-    if (!fireLayersLoaded) return;
-
-    const filter = years.length === allYears.length
-        ? null
-        : [
-            'in',
-            [
-                'coalesce',
-                ['to-number', ['get', 'an_origine']],
-                ['to-number', ['get', 'exercice']],
-                -1
-            ],
-            ['literal', years]
-        ];
-
-    fireLayerIds.forEach((layerId) => {
-        if (map.getLayer(layerId)) {
-            map.setFilter(layerId, filter);
-        }
-    });
-}
 
 // Creating base map object with maplibre 
 
@@ -51,18 +25,9 @@ const map = new maplibregl.Map({
     container: "map",
     zoom: 12, 
     center: [-70, 53],
-    style: {
-        version: 8,
-        sources: {
-        "raster-tiles": {
-            type: "raster",
-            tiles: ["https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2025_3857/default/g/{z}/{y}/{x}.jpg"],
-            tileSize: 256,
-            attribution: "<a href=\"https://cloudless.eox.at\">EOxCloudless</a> by EOX IT Services GmbH (Contains modified Copernicus Sentinel data 2025)",
-        },
-        },
-        layers: [{ id: "raster-layer", type: "raster", source: "raster-tiles" }],
-    },
+    style: "https://styles.maptoolkit.org/summer.json",
+    // Maptoolkit's terms require its credit to stay fully visible.
+    attributionControl: { compact: false },
 });
 
 // LOADING MAP LAYERS
@@ -180,6 +145,35 @@ map.addControl(new maplibregl.NavigationControl({
     showZoom: true,
     showCompass: true,
 }));
+
+let selectedFireYears = [];
+let availableFireYears = [];
+let fireLayersLoaded = false;
+
+function updateMapYearFilter(years, allYears = availableFireYears) {
+    selectedFireYears = years;
+    availableFireYears = allYears;
+    if (!fireLayersLoaded) return;
+
+    const filter = years.length === allYears.length
+        ? null
+        : [
+            'in',
+            [
+                'coalesce',
+                ['to-number', ['get', 'an_origine']],
+                ['to-number', ['get', 'exercice']],
+                -1
+            ],
+            ['literal', years]
+        ];
+
+    fireLayerIds.forEach((layerId) => {
+        if (map.getLayer(layerId)) {
+            map.setFilter(layerId, filter);
+        }
+    });
+}
 
 // **********************************************************************************************
 // YEAR FILTER
