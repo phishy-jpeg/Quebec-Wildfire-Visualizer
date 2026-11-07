@@ -23,7 +23,7 @@ const fireLayerIds = ['fires-fill', 'fires-ancien-fill'];
 
 const map = new maplibregl.Map({
     container: "map",
-    zoom: 12, 
+    zoom: 4, 
     center: [-70, 53],
     style: "https://styles.maptoolkit.org/summer.json",
     // Maptoolkit's terms require its credit to stay fully visible.
@@ -58,7 +58,7 @@ map.on('load', () => {
         'source-layer': 'FEUX_PROV',
         paint: {
             'fill-color': '#ff0000',
-            'fill-opacity': 1,
+            'fill-opacity': 0.4,
             'fill-outline-color': '#4f0000'
         }
     });
@@ -74,7 +74,7 @@ map.on('load', () => {
         'source-layer': 'FEUX_ANCIENS_PROV',
         paint: {
             'fill-color': '#ff0000',
-            'fill-opacity': 1,
+            'fill-opacity': 0.4,
             'fill-outline-color': '#4f0000'
         }
     });
