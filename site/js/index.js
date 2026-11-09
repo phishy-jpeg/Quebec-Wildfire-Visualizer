@@ -48,7 +48,7 @@ map.on('load', () => {
         'source': 'quebec-border',
         'paint': {
             'line-color': '#fefeff',
-            'line-width': 0.1
+            'line-width': 0.15
         }
     });
     // fires layer
@@ -70,7 +70,7 @@ map.on('load', () => {
     // Adding ancient fire layers
     map.addSource('feux_ancien', {
         type: 'vector',
-        url:  `pmtiles://${fireAnciensUrl}`,
+        url:  `pmtiles://${fireAnciensUrl}`, 
     });
     map.addLayer({
         id: 'fires-ancien-fill',
@@ -93,7 +93,7 @@ map.on('load', () => {
         if (!properties) return;
 
         // Showing fire size and year in the pop up
-        const year = properties.an_origine ?? properties.exercice ?? 'Unknown'; // Year
+        const year = properties.exercice ?? 'Unknown'; // Year
         const area = properties.superficie ?? 'Unknown'; // Size (ha) 
 
         // Creating a pop up element with the year and size 
