@@ -100,17 +100,17 @@ body.map-page .header-title {
 
 /* Filter button design */
 .map-filter {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  z-index: 4;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 4;
 }
+
 .toggler-header {
     display: flex;
     border: 1px solid var(--border);
     border-radius: 0.45rem;
     background: white;
-    box-shadow: 0 2px 8px rgb(20 39 86 / 18%);
 }
 
 .filter-header-h1 {
@@ -143,12 +143,12 @@ body.map-page .header-title {
 }
 
 .change .bar1 {
-  transform: translate(0, 13px) rotate(-45deg);
+  transform: translate(0, 11px) rotate(-45deg);
 }
 .change .bar2 {opacity: 0;}
 
 .change .bar3 {
-  transform: translate(0, -13px) rotate(45deg);
+  transform: translate(0, -11px) rotate(45deg);
 }
 
 .filter-panel {
@@ -162,10 +162,15 @@ body.map-page .header-title {
   border-radius: 0.6rem;
   background: rgb(255 255 255 / 95%);
   box-shadow: 0 8px 24px rgb(20 39 86 / 18%);
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 350ms ease, transform 350ms ease, display 350ms allow-discrete;
 }
 
 .filter-panel[hidden] {
-  display: none;
+    display: none;
+    opacity: 0;
+    transform: translateY(-0.5rem);
 }
 
 .filter-section {
@@ -174,7 +179,7 @@ body.map-page .header-title {
 
 .filter-panel-item {
     overflow: scroll;
-    height:400px;
+    height: 400px;
 }
 
 .year-range-filter {
@@ -191,29 +196,13 @@ body.map-page .header-title {
     padding: 0.4rem;
 }
 
-.year-search-label,
-.year-search,
 .year-selection-count,
-#apply-year-range,
+#add-year-range,
+#new-year-selection,
 #year-filter-status,
 #clear-year-selection,
 #clear-year-filter {
     grid-column: 1 / -1;
-}
-
-.year-search-label {
-    padding: 0 0.75rem;
-    color: var(--muted);
-    font-size: 0.85rem;
-}
-
-.year-search {
-    width: calc(100% - 1.5rem);
-    margin: 0 0.75rem;
-    padding: 0.5rem;
-    border: 1px solid var(--border);
-    border-radius: 0.35rem;
-    font: inherit;
 }
 
 .year-selection-count {
@@ -225,9 +214,13 @@ body.map-page .header-title {
 .year-options {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.25rem;
+    gap: 0.3rem 0.5rem;
+    max-height: 9rem;
+    overflow-y: auto;
     margin: 0;
     padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border);
+    background: #fff;
     list-style: none;
 }
 
@@ -242,7 +235,8 @@ body.map-page .header-title {
     margin: 0;
 }
 
-#apply-year-range,
+#add-year-range,
+#new-year-selection,
 #clear-year-selection,
 #clear-year-filter {
     min-height: 2rem;
@@ -255,7 +249,8 @@ body.map-page .header-title {
     cursor: pointer;
 }
 
-#apply-year-range:hover,
+#add-year-range:hover,
+#new-year-selection:hover,
 #clear-year-selection:hover,
 #clear-year-filter:hover {
     background: var(--accent-light);
@@ -280,34 +275,25 @@ body.map-page .header-title {
     display: grid;
     grid-template-columns: auto auto;
     align-items: start;
+    padding: 0.5rem;
     gap: 0.15rem 0.75rem;
-    margin: 0;
-    padding: 0.8rem 1rem;
-    border: 1px solid lightgrey;
-    border-radius: 0.55rem;
-    background: #f6f8fc;
-    box-shadow: 0 8px 28px rgb(20 39 86 / 5%);
+    border-bottom: 1px solid var(--border);
+    background: transparent;
 }
 
 .fire-count-title {
-    color: var(--muted);
-    font-size: 0.5rem;
+    color: var(--text);
+    font-size: 0.85rem;
     font-weight: 400;
 }
 
 #fire-count-value,
 #hectares-count-value {
-    color: var(--accent);
+    color: var(--text);
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 400;
     font-variant-numeric: tabular-nums;
     text-align: right;
-}
-
-.fire-count-footer {
-    grid-column: 1 / -1;
-    color: var(--muted);
-    font-size: 0.5em;
 }
 
 #map {
@@ -343,10 +329,5 @@ body.map-page .header-title {
 
     .site-nav a {
         padding: 0.45rem 0.65rem;
-    }
-
-    .site-footer {
-        flex-direction: column;
-        padding: 1rem;
     }
 }

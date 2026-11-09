@@ -27,10 +27,10 @@ export async function initializeYearFilter(onChange) {
     const status = document.getElementById('year-filter-status');
     const selectionCount = document.getElementById('year-selection-count');
     const options = document.getElementById('year-options');
-    const searchInput = document.getElementById('year-search');
     const fromInput = document.getElementById('year-filter-input-from');
     const toInput = document.getElementById('year-filter-input-to');
-    const applyRangeButton = document.getElementById('apply-year-range');
+    const addRangeButton = document.getElementById('add-year-range');
+    const newSelectionButton = document.getElementById('new-year-selection');
     const fireCountValue = document.getElementById('fire-count-value');
     const hectaresCountValue = document.getElementById('hectares-count-value');
 
@@ -127,14 +127,7 @@ export async function initializeYearFilter(onChange) {
         }));
     }
 
-    searchInput?.addEventListener('input', () => {
-        const query = searchInput.value.trim();
-        options?.querySelectorAll('.year-option').forEach((label) => {
-            label.hidden = query !== '' && !label.dataset.year.includes(query);
-        });
-    });
-
-    function applyYearRange() {
+    function applyYearRange(addToSelection) {
         if (!fromInput || !toInput) return;
 
         const fromYear = fromInput.valueAsNumber;
@@ -153,15 +146,18 @@ export async function initializeYearFilter(onChange) {
             return;
         }
 
-        setSelectedYears(
-            availableYears.filter((year) => year >= fromYear && year <= toYear)
-        );
+        const rangeYears = availableYears.filter((year) => year >= fromYear && year <= toYear);
+        const nextYears = addToSelection
+            ? new Set([...selectedYears, ...rangeYears])
+            : new Set(rangeYears);
+        setSelectedYears([...nextYears], '', false);
     }
 
-    applyRangeButton?.addEventListener('click', applyYearRange);
+    addRangeButton?.addEventListener('click', () => applyYearRange(true));
+    newSelectionButton?.addEventListener('click', () => applyYearRange(false));
     [fromInput, toInput].filter(Boolean).forEach((input) => {
         input.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') applyYearRange();
+            if (event.key === 'Enter') applyYearRange(false);
         });
     });
 

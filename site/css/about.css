@@ -45,12 +45,12 @@
 }
 
 .about {
-    max-width: 860px;
+    width: min(100% - 2rem, 860px);
     margin: clamp(2rem, 8vw, 5rem) auto;
-    padding: 0 0 1rem;
     background: #fff;
     border-left: 4px solid #202020;
-    box-shadow: 0 8px 28px rgba(30, 49, 98, 0.08);
+    box-shadow: 0 8px 28px rgb(20 39 86 / 8%);
+    padding: 0 0 1rem;
 }
 
 .about-title {
@@ -80,6 +80,6 @@
     }
 
     .about {
-        margin: 1.5rem 1rem;
+        margin: 1.5rem auto;
     }
 }

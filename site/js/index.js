@@ -1,6 +1,5 @@
 import * as maplibregl from 'https://unpkg.com/maplibre-gl@6.12.0/dist/maplibre-gl.mjs';
 import { initializeYearFilter } from './year-filter.js';
-import { ScaleControl } from 'maplibre-gl';
 
 // TODO: THIS CODE IS A MESS ORGANIZE IT BETTER 
 // TODO: Add fire filters into the map view so when the map is full screen you can still filter the data
@@ -30,7 +29,7 @@ const map = new maplibregl.Map({
     // Maptoolkit's terms require its credit to stay fully visible.
     attributionControl: { compact: false },
 });
-const scale = new ScaleControl({
+const scale = new maplibregl.ScaleControl({
   unit: 'metric'       
 });
 

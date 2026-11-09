@@ -98,21 +98,11 @@
     cursor: pointer;
 }
 
-.year-search-label,
 .year-selection-count {
     display: block;
     margin-top: 0.75rem;
     color: #555;
     font-size: 0.9rem;
-}
-
-.year-search {
-    width: 100%;
-    margin-top: 0.3rem;
-    padding: 0.5rem;
-    border: 1px solid #bbb;
-    border-radius: 0.3rem;
-    font: inherit;
 }
 
 #year-filter-status {
