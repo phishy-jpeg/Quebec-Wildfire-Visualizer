@@ -4,4 +4,6 @@ site/data/FEUX_PROV.gpkg
 site/date/FEUX_PROV.geojson
 site/data/clean_SDA_4326.geojson
 site/data/clean_SDA.geojson
+site/data/FEUX_ANCIENS_PROV_backup.pmtiles
+site/data/FEUX_PROV_backup.pmtiles
 site/config.yaml
