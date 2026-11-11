@@ -54,6 +54,7 @@
 .about {
     width: min(100% - 2rem, 860px);
     margin: clamp(2rem, 8vw, 5rem) auto;
+    margin-bottom: 5rem;
     background: #fff;
     border-left: 4px solid #202020;
     box-shadow: 0 8px 28px rgb(20 39 86 / 8%);
@@ -74,6 +75,22 @@
     line-height: 1.75;
 }
 
+.about h3 {
+    margin: 0 0 1.5rem;
+    padding: 1.5rem 1.5rem 0;
+    color: black;
+    font-size: 1.3rem;
+}
+#learn-more {
+    margin-bottom: 1.5rem;
+}
+.about a {
+    margin: 0 1.5rem;
+    color: #505968;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    font-weight: normal;
+}
 @media (max-width: 640px) {
     .site-header {
         align-items: flex-start;
