@@ -110,15 +110,11 @@ map.on('load', () => {
         'source-layer': 'FEUX_PROV',
         paint: {
             'fill-color': '#ff0000',
-            'fill-opacity': ['case',
-                ['boolean', ['feature-state', 'clicked'], false], 
-                '0.4',
-                '0.8'
-            ],
+            'fill-opacity': '0.4',
             'fill-outline-color': '#4f0000'
         }
     });
-    // Adding ancient fire layers
+    // Adding ancien fire layers
     map.addSource('feux_ancien', {
         type: 'vector',
         url:  `pmtiles://${fireAnciensUrl}`, 
@@ -130,11 +126,7 @@ map.on('load', () => {
         'source-layer': 'FEUX_ANCIENS_PROV',
         paint: {
             'fill-color': '#ff0000',
-            'fill-opacity': ['case',
-                ['boolean', ['feature-state', 'clicked'], false], 
-                '0.4',
-                '0.8'
-            ],
+            'fill-opacity': '0.4',
             'fill-outline-color': '#4f0000'
         }
     });
@@ -142,8 +134,7 @@ map.on('load', () => {
     fireLayersLoaded = true;
     updateMapYearFilter(selectedFireYears);
 
-    let clickedFea
-    // Show fire-year details when a fire polygon is clicked.
+    // Show fire details when a fire polygon is clicked.
     map.on('click', 'fires-fill', (e) => {
         const properties = e.features[0].properties;
         if (!properties) return;
