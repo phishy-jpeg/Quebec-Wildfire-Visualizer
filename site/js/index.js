@@ -110,7 +110,7 @@ map.on('load', () => {
         'source-layer': 'FEUX_PROV',
         paint: {
             'fill-color': '#ff0000',
-            'fill-opacity': '0.4',
+            'fill-opacity': 0.4,
             'fill-outline-color': '#4f0000'
         }
     });
@@ -126,7 +126,7 @@ map.on('load', () => {
         'source-layer': 'FEUX_ANCIENS_PROV',
         paint: {
             'fill-color': '#ff0000',
-            'fill-opacity': '0.4',
+            'fill-opacity': 0.4,
             'fill-outline-color': '#4f0000'
         }
     });
