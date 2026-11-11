@@ -40,14 +40,17 @@ During my demo I got some good ideas on things to implement and change about my 
 ## A3: 2 new data sets and 2 new features
 ### Data set 1: Forest Fires before 1976 (1975 - 1885).
 - File for preprocessing: notebookes/functions.py
-    - I turned the forest fire data into pmtiles so they can run serverless. 
+    - I turned the forest fire data into pmtiles so they can run serverless.
+    - Explanation: I used python to preprocess my data similar to the labs (changed the espg, got rid of unnecessary columns, and turn it into a geojson). I then used the tool tippecanoe from the terminal (althought I included the terminal command in the python, for documentation), to turn my geojson into a .pmtiles, which are able to run serverless.  
 - File for adding to my map: site/js/index.js
     - Lines: 172 - 132 (adding the layer) & 163 - 189 (adding the fire info when the user clicks the polygon).
+    - Explanation: Adds the dataset using maplibre as demonstrated in the labs (create new source then create new layer)
 ### Data set 2: Quebec Watersheds. 
 - File for preprocessing: notebooks/watershed.ipynb
     - The original file was for all of Canada, so I kept only the features that intersected with my quebec polygon. 
 - File for adding to my map: site/js/index.js
     - Lines: 37 - 83 (Adding the layer and adding a pop up with infor when the user clicks the polygon).
+    - Explanation: Adds the dataset using maplibre as demonstrated in the labs (create new source then create new layer)
 
 ### Feature 1
 Ability to enter the dates as a text input range rather than through clicking individual boxes. 
@@ -73,6 +76,10 @@ I added this feature because I found that without additional visualization, my w
 
 - File where this feature happens: site/js/graphs.js
     - Lines where this features happens: The whole file, but it also uses the site/js/year-filter.js file.
+    - I created a graph and then I created the layers I wanted (individual fire, and hectares burned). After that the chart takes the data from the *hecatarsCountByYear* and *fireCountByYears* variables, as the dataset (which is from a dataset I created site/data/fire_counts_by_year.json, that I turned into a variable), and filters those by the *years* variable, which holds which years the user has selected. 
+
+### One thing not fully understood from A3
+How does the years selected keep synchronized across both the graph and the map?
 
 **Edge case:** The user input for this feature is the same as in feature 1 (sorting the results by a year range), so the edge cases are identical. 
 
