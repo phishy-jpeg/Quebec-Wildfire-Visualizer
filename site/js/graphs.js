@@ -1,8 +1,9 @@
+// Import so that the map and chart pages will work together 
 import { initializeYearFilter } from './year-filter.js';
 
 let fireChart;
 let selectedYears = [];
-
+// Creating a year filter 
 const yearFilter = await initializeYearFilter((years) => {
     selectedYears = years;
     if (!fireChart) return;
@@ -13,10 +14,12 @@ const yearFilter = await initializeYearFilter((years) => {
     fireChart.update();
 });
 
+// Creating a chart 
 fireChart = new Chart(document.getElementById('fire-graph'), {
     type: 'bar',
     data: {
         labels: selectedYears,
+        // Adding in the fire counts by year and hectares by year datasets (created in my jupyter notebooks)
         datasets: [
             {
                 label: 'Recorded fires',
@@ -69,7 +72,7 @@ fireChart = new Chart(document.getElementById('fire-graph'), {
                     text: 'Number of fires'
                 }
             },
-            y1: {
+            y1: { // Second y scale 
                 beginAtZero: true,
                 position: 'right',
                 grid: {

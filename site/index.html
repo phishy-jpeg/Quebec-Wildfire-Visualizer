@@ -51,6 +51,7 @@
                                     <button id="new-year-selection" class="button-secondary" type="button">New selection</button>
                                     <p id="year-filter-status" role="status" aria-live="polite"></p>
                                 </div>
+                                <p id="years-shown" class="years-shown" aria-live="polite"></p>
                                 <p id="year-selection-count" class="year-selection-count" aria-live="polite"></p>
                                 <ul id="year-options" class="year-options"></ul>
                                 <button id="clear-year-selection" class="button-secondary" type="button">Clear selection</button>
@@ -70,7 +71,7 @@
                                 </div>                                
                             </div>
                         </div>
-                        <div class="filter-section">
+                        <div class="size-filter-section">
                             <button id="size-filter-toggle" class="panel-item" type="button" aria-expanded="false" aria-controls="size-panel">
                                 <span>Filter by size ⬇</span>
                             </button>
@@ -78,6 +79,18 @@
                                 <p class="map-hint">Size filters will be available here.</p>
                             </div>
                         </div>
+                        <div class="layers-filter-section">
+                            <button id="layers-filter-toggle" class="panel-item" type="button" aria-expanded="false" aria-controls="layers-panel">
+                                <span>Layers ⬇</span>
+                            </button>
+                            <div id="layers-panel" class="layers-panel" hidden>
+                                <label class="layer-option" for="watersheds-toggle">
+                                    <input id="watersheds-toggle" type="checkbox" checked>
+                                    <span class="layer-legend-swatch" aria-hidden="true"></span>
+                                    <span>Watersheds</span>
+                                </label>
+                            </div>
+                        </div>                        
                     </div>
                 </div>
         </div>

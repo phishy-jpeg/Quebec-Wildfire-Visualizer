@@ -25,6 +25,7 @@ export async function initializeYearFilter(onChange) {
     const clearButton = document.getElementById('clear-year-filter');
     const clearSelectionButton = document.getElementById('clear-year-selection');
     const status = document.getElementById('year-filter-status');
+    const yearsShown = document.getElementById('years-shown');
     const selectionCount = document.getElementById('year-selection-count');
     const options = document.getElementById('year-options');
     const fromInput = document.getElementById('year-filter-input-from');
@@ -36,6 +37,28 @@ export async function initializeYearFilter(onChange) {
 
     function getYearsForDisplay() {
         return [...selectedYears].sort((a, b) => a - b);
+    }
+
+    function formatYearRanges(selected) {
+        if (selected.length === 0) return 'None';
+
+        const ranges = [];
+        let rangeStart = selected[0];
+        let rangeEnd = selected[0];
+
+        for (const year of selected.slice(1)) {
+            if (year === rangeEnd + 1) {
+                rangeEnd = year;
+                continue;
+            }
+
+            ranges.push(rangeStart === rangeEnd ? String(rangeStart) : `${rangeStart}-${rangeEnd}`);
+            rangeStart = year;
+            rangeEnd = year;
+        }
+
+        ranges.push(rangeStart === rangeEnd ? String(rangeStart) : `${rangeStart}-${rangeEnd}`);
+        return ranges.join(', ');
     }
 
     function render(message = '', persist = true, syncRangeInputs = true) {
@@ -63,6 +86,9 @@ export async function initializeYearFilter(onChange) {
         }
         if (status) {
             status.textContent = message;
+        }
+        if (yearsShown) {
+            yearsShown.textContent = `Years shown: ${formatYearRanges(selected)}`;
         }
         if (selectionCount) {
             selectionCount.textContent = `${selected.length} of ${availableYears.length} years selected`;
