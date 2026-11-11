@@ -34,6 +34,7 @@ const scale = new maplibregl.ScaleControl({
 });
 map.addControl(scale, 'bottom-left');
 
+// Error for if the data doesnt load (probable due to the size of the data set). Lab 7: usuability
 map.on('error', (event) => {
     if (!fireSourceIds.includes(event.sourceId)) return;
 
@@ -130,7 +131,12 @@ map.on('load', () => {
         'source-layer': 'FEUX_PROV',
         paint: {
             'fill-color': '#ff0000',
-            'fill-opacity': 0.4,
+            'fill-opacity': [
+                'case',
+                ['boolean', ['feature-state', 'clicked'], false],
+                0.8,
+                0.4
+            ],
             'fill-outline-color': '#4f0000'
         }
     });
@@ -146,7 +152,12 @@ map.on('load', () => {
         'source-layer': 'FEUX_ANCIENS_PROV',
         paint: {
             'fill-color': '#ff0000',
-            'fill-opacity': 0.4,
+            'fill-opacity': [
+                'case',
+                ['boolean', ['feature-state', 'clicked'], false],
+                0.8,
+                0.4
+            ],
             'fill-outline-color': '#4f0000'
         }
     });
@@ -155,10 +166,29 @@ map.on('load', () => {
     fireLayersLoaded = true;
     updateMapYearFilter(selectedFireYears);
 
+    let selectedFire = null;
+    function highlightFire(feature, source, sourceLayer) {
+        if (selectedFire) {
+            map.setFeatureState(selectedFire, { clicked: false });
+        }
+
+        if (feature.id === undefined || feature.id === null) {
+            selectedFire = null;
+            console.warn('Cannot highlight this fire because its vector-tile feature has no ID.');
+            return;
+        }
+
+        selectedFire = { source, sourceLayer, id: feature.id };
+        map.setFeatureState(selectedFire, { clicked: true });
+    }
+
     // Show fire details when a fire polygon is clicked.
     map.on('click', 'fires-fill', (e) => {
-        const properties = e.features[0].properties;
+        const feature = e.features?.[0];
+        const properties = feature?.properties;
         if (!properties) return;
+
+        highlightFire(feature, 'feux_prov', 'FEUX_PROV');
 
         // Showing fire size and year in the pop up
         const year = properties.exercice ?? 'Unknown'; // Year
@@ -183,8 +213,11 @@ map.on('load', () => {
     });
     // Show fire-year details when a pre 1976 fire polygon is clicked.
     map.on('click', 'fires-ancien-fill', (e) => {
-        const properties = e.features[0].properties;
+        const feature = e.features?.[0];
+        const properties = feature?.properties;
         if (!properties) return;
+
+        highlightFire(feature, 'feux_ancien', 'FEUX_ANCIENS_PROV');
 
         // Showing fire size and year in the pop up
         const year = properties.an_origine ?? properties.exercice ?? 'Unknown'; // Year
