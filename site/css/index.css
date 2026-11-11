@@ -358,6 +358,31 @@ body.map-page .site-header {
     background: #dce3eb;
 }
 
+.fire-data-status {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    z-index: 3;
+    max-width: calc(100% - 2rem);
+    padding: 0.7rem 1rem;
+    transform: translateX(-50%);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background: rgb(255 255 255 / 95%);
+    box-shadow: 0 4px 14px rgb(20 39 86 / 18%);
+    color: var(--text);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.fire-data-status[hidden] {
+    display: none;
+}
+
+.fire-data-status-error {
+    color: #8b1e1e;
+}
+
 .map-hint {
     margin: 0.75rem 0 0;
     color: var(--muted);

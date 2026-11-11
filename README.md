@@ -1,6 +1,9 @@
 # Quebec Forest Fire Visualizer
 The Quebec Forest Fire Visualizer allows users to see historic wildfires in Quebec. Users are able to filter the data by year, and compare how many fires happened each year, as well as how many hectores burned and how the fires are spatially distributed.
 
+**Github pages link:** https://phishy-jpeg.github.io/Quebec-Wildfire-Visualizer
+**My github repo link:** https://github.com/phishy-jpeg/Quebec-Wildfire-Visualizer
+
 ## Problem
 Wildfires are becoming increasingly common year after year as the climate warms. While it is very easy to find online graphs on the increase in wildfires, resources to visualize this spatially this is limited. This site aims to be a tool for people interested in conservation, to be able to visualize the effects of wildfires over the years. 
 
@@ -84,6 +87,11 @@ I added this feature because I found that without additional visualization, my w
 | 6. On a phone (size view and my phone) | Passed: I viewed the website on my phone | I changed the layout of my map completly. It is now default full size, without large margin on the side of it. |
 | 7. Mouse in my pocket | Pass: I tabed throught the filters | It worked and I didn't have to change anything |
 | 8. Accessibility audit | Pass: 91% | I did the accesibilty audit in developer tools and got a 91%, I did not have to change naything. |
+
+## Next Additions
+1. Redo my juypter notebooks, to run as one app.py file, and make sure my code is as efficient as can be (my notebooks are currently very messy)
+2. Improve site usability based on the results for the testing session. 
+3. Add data for the rest of Canada, and allow the user to sort by province (this may be done after the class is done.)
 
 ## Sources
 - Forest fires since 1976: Ministère des Ressources naturelles et des Forêts (MRNF), https://www.donneesquebec.ca/recherche/dataset/feux-de-foret

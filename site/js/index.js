@@ -14,8 +14,10 @@ maplibregl.addProtocol("pmtiles", protocol.tile);
 // Creating consts for the pmtiles url
 const fireUrl = new URL('../data/FEUX_PROV.pmtiles', import.meta.url).href;
 const fireAnciensUrl = new URL('../data/FEUX_ANCIENS_PROV.pmtiles', import.meta.url).href;
+const fireSourceIds = ['feux_prov', 'feux_ancien'];
 const fireLayerIds = ['fires-fill', 'fires-ancien-fill'];
 const watershedLayerIds = ['watersheds-hit-area', 'watersheds'];
+const fireDataStatus = document.getElementById('fire-data-status');
 
 // Creating base map object with maplibre 
 const map = new maplibregl.Map({
@@ -31,6 +33,24 @@ const scale = new maplibregl.ScaleControl({
   unit: 'metric'       
 });
 map.addControl(scale, 'bottom-left');
+
+map.on('error', (event) => {
+    if (!fireSourceIds.includes(event.sourceId)) return;
+
+    fireDataStatus.textContent = 'Wildfire data could not be loaded. Please refresh the page.';
+    fireDataStatus.classList.add('fire-data-status-error');
+});
+
+function hideFireDataStatusWhenLoaded() {
+    const allFireSourcesLoaded = fireSourceIds.every((sourceId) =>
+        map.getSource(sourceId) && map.isSourceLoaded(sourceId)
+    );
+
+    if (allFireSourcesLoaded) {
+        fireDataStatus.hidden = true;
+        map.off('idle', hideFireDataStatusWhenLoaded);
+    }
+}
 
 // LOADING MAP LAYERS
 map.on('load', () => {
@@ -131,6 +151,7 @@ map.on('load', () => {
         }
     });
 
+    map.on('idle', hideFireDataStatusWhenLoaded);
     fireLayersLoaded = true;
     updateMapYearFilter(selectedFireYears);
 
