@@ -1,0 +1,17 @@
+A3 AI Disclosure
+
+Lane: Bring your own agent (Blue) 
+Tool Used: Github Copilot in VS code 
+
+How it was used: For this assignment I used AI very similarly to how it was used in A2. 
+I used it to help with the more complicated JS logic and with the styling.
+
+To explain further, I knew every feature I wanted to add to my site, and how I wanted these features to be implemented, but instead of writing lots of the physical code I had AI do it. For example, I knew I wanted the user to be able a year range (from year -- to year), but rather writing this code would take a very long time so I had AI help me write it, while explaining every step.
+I did a similar processes, for all of these features that would take a long time to code by hand; I had AI create the feature, then I reread the code and made sure I understood it, then went back and made changes to the code as I saw fit, to better suit my vision. 
+
+Additionally, for the styling I made sure I had a vision (black, white, blue accents, simple), and styled one page as a liked (about), I then had the AI copy that styling to all my other pages. This step took lots of back and forth to make sure the page looked as a like, as the AI kept creating more complex visual than I wanted. 
+
+I made sure that for every AI prompt where the machine was working directly on my file, I understood how the JS logic worked, and tested my website after every step. 
+I rejected many prompts for not being what I asked for, and there was lots of back and forth, to make sure I understood what the code was doing and how it was doing it. 
+
+To summarize, I used the AI mainly for monotonous code that would take a long time to write by hand, and for the over all css styling, since I am terrible at making an appealing looking web page.

@@ -35,13 +35,24 @@ During my demo I got some good ideas on things to implement and change about my 
 - Some sort of layer with relevent data to compare the forest fire data to. 
 
 ## A3: 2 new data sets and 2 new features
-**Data set 1:** Forest Fires before 1976 (1975 - 1885).
-**Data set 2:** Quebec Watersheds. 
+### Data set 1: Forest Fires before 1976 (1975 - 1885).
+- File for preprocessing: notebookes/functions.py
+    - I turned the forest fire data into pmtiles so they can run serverless. 
+- File for adding to my map: site/js/index.js
+    - Lines: 172 - 132 (adding the layer) & 163 - 189 (adding the fire info when the user clicks the polygon).
+### Data set 2: Quebec Watersheds. 
+- File for preprocessing: notebooks/watershed.ipynb
+    - The original file was for all of Canada, so I kept only the features that intersected with my quebec polygon. 
+- File for adding to my map: site/js/index.js
+    - Lines: 37 - 83 (Adding the layer and adding a pop up with infor when the user clicks the polygon).
 
 ### Feature 1
 Ability to enter the dates as a text input range rather than through clicking individual boxes. 
 
 I added this feature to improve the user experience of the site. Many of the comments on my MVP, involved the difficulty in using the year search function. This feature allows users to have better control of the map, and greatly improves the overall functionality of my site. 
+
+- File where this feature happens (main function): site/js/year-filter.js (The features works on 2 pages (charts and the map) so it's not in one pages js.)
+    - Lines: The whole file.
 
 I know that this feature worked when I was able to enter a year range, and saw the map and corresponding graph (feature 2) update in real time.
 
@@ -57,7 +68,10 @@ A corresponding graph, that shows how many hectares burned each year, and how ma
 
 I added this feature because I found that without additional visualization, my website was lacking in it ability to do its primary function (ie. show the increase in wildfires over the years, in a visual way). This feature improves the abiility for my website to tell a story. 
 
-Edge case: The user input for this feature is the same as in feature 1 (sorting the results by a year range), so the edge cases are identical. 
+- File where this feature happens: site/js/graphs.js
+    - Lines where this features happens: The whole file, but it also uses the site/js/year-filter.js file.
+
+**Edge case:** The user input for this feature is the same as in feature 1 (sorting the results by a year range), so the edge cases are identical. 
 
 ## Pre-flight report 
 | Check | Result | What I did |
@@ -69,7 +83,7 @@ Edge case: The user input for this feature is the same as in feature 1 (sorting 
 | 5. The data does not come | Fault: I did not a warning about data loading to the user | I need to add someting that will alert the user that the data isn't loading |
 | 6. On a phone (size view and my phone) | Passed: I viewed the website on my phone | I changed the layout of my map completly. It is now default full size, without large margin on the side of it. |
 | 7. Mouse in my pocket | Pass: I tabed throught the filters | It worked and I didn't have to change anything |
-| 8. Accessibility audit | Pass: 100% | I did the accesibilty audit in developer tools and got a 100%, I did not have to change naything. |
+| 8. Accessibility audit | Pass: 91% | I did the accesibilty audit in developer tools and got a 91%, I did not have to change naything. |
 
 ## Sources
 - Forest fires since 1976: Ministère des Ressources naturelles et des Forêts (MRNF), https://www.donneesquebec.ca/recherche/dataset/feux-de-foret

@@ -59,7 +59,7 @@ map.on('load', () => {
             'visibility': watershedsToggle.checked ? 'visible' : 'none'
         },
         'paint': {
-            'line-color': '#0050ac',
+            'line-color': '#1c6cc8',
             'line-width': 1
         }
     });
@@ -229,7 +229,7 @@ function updateMapYearFilter(years, allYears = availableFireYears) {
 }
 
 // **********************************************************************************************
-// YEAR FILTER
+// FILTERS
 // **********************************************************************************************
 const filterToggleButton = document.getElementById('filter-toggle');
 const filterPanel = document.getElementById('filter-panel');
