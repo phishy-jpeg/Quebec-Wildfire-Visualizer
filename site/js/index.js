@@ -2,8 +2,7 @@ import * as maplibregl from 'https://unpkg.com/maplibre-gl@6.12.0/dist/maplibre-
 import { initializeYearFilter } from './year-filter.js';
 
 // TODO: THIS CODE IS A MESS ORGANIZE IT BETTER 
-// TODO: Add fire filters into the map view so when the map is full screen you can still filter the data
-// TODO: Find another revelant data layer to add to the map
+// TODO: Add new layer for the fire layers, since the current one does not have unique ID's.
 // **********************************************************************************************
 // MAP OBJECT 
 // **********************************************************************************************
@@ -91,8 +90,11 @@ map.on('load', () => {
         'id': 'quebec-border',
         'type': 'line',
         'source': 'quebec-border',
+        'layout': {
+            'visibility': quebecBorderToggle.checked ? 'visible' : 'none'
+        },
         'paint': {
-            'line-color': '#fefeff',
+            'line-color': '#000000',
             'line-width': 1
         }
     });
@@ -108,7 +110,11 @@ map.on('load', () => {
         'source-layer': 'FEUX_PROV',
         paint: {
             'fill-color': '#ff0000',
-            'fill-opacity': 0.4,
+            'fill-opacity': ['case',
+                ['boolean', ['feature-state', 'clicked'], false], 
+                '0.4',
+                '0.8'
+            ],
             'fill-outline-color': '#4f0000'
         }
     });
@@ -124,7 +130,11 @@ map.on('load', () => {
         'source-layer': 'FEUX_ANCIENS_PROV',
         paint: {
             'fill-color': '#ff0000',
-            'fill-opacity': 0.4,
+            'fill-opacity': ['case',
+                ['boolean', ['feature-state', 'clicked'], false], 
+                '0.4',
+                '0.8'
+            ],
             'fill-outline-color': '#4f0000'
         }
     });
@@ -132,6 +142,7 @@ map.on('load', () => {
     fireLayersLoaded = true;
     updateMapYearFilter(selectedFireYears);
 
+    let clickedFea
     // Show fire-year details when a fire polygon is clicked.
     map.on('click', 'fires-fill', (e) => {
         const properties = e.features[0].properties;
@@ -238,6 +249,7 @@ const sizePanel = document.getElementById('size-panel');
 const layersFilterToggleButton = document.getElementById('layers-filter-toggle');
 const layersPanel = document.getElementById('layers-panel');
 const watershedsToggle = document.getElementById('watersheds-toggle');
+const quebecBorderToggle = document.getElementById('quebec-border-toggle');
 const filterHeader = document.getElementById('filter-header-h1');
 
 // Expanding filter section, and toggle animations
@@ -292,5 +304,15 @@ watershedsToggle.addEventListener('change', () => {
         }
     });
 });
+quebecBorderToggle.addEventListener('change', () => {
+    if (map.getLayer('quebec-border')) {
+        map.setLayoutProperty(
+            'quebec-border',
+            'visibility',
+            quebecBorderToggle.checked ? 'visible' : 'none'
+        );
+    }
+});
+
 
 await initializeYearFilter(updateMapYearFilter);

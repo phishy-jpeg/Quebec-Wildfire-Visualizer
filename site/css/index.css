@@ -205,9 +205,14 @@ body.map-page .site-header {
 }
 
 .layer-legend-swatch {
-    width: 1.25rem;
-    height: 0;
-    border-top: 2px solid #0050ac;
+    display: block;
+    flex: 0 0 1.25rem;
+    height: 2px;
+    background-color: #0050ac;
+}
+
+.layer-legend-swatch-border {
+    background-color: #000000;
 }
 
 .year-range-filter {
