@@ -80,8 +80,8 @@ map.on('load', () => {
             'visibility': watershedsToggle.checked ? 'visible' : 'none'
         },
         'paint': {
-            'line-color': '#1c6cc8',
-            'line-width': 1
+            'line-color': '#691cc8',
+            'line-width': 0.8
         }
     });
     map.on('click', 'watersheds-hit-area', (e) => {
@@ -116,7 +116,7 @@ map.on('load', () => {
         },
         'paint': {
             'line-color': '#000000',
-            'line-width': 1
+            'line-width': 1.2
         }
     });
     // fires layer
