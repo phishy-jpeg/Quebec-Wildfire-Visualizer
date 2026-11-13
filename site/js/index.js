@@ -129,7 +129,7 @@ map.on('load', () => {
         type: 'fill',
         source: 'feux_prov',
         'source-layer': 'FEUX_PROV',
-        paint: {
+        paint: { // So the fire opacity changes when clicked and it is clear the fire border
             'fill-color': '#ff0000',
             'fill-opacity': [
                 'case',
@@ -150,7 +150,7 @@ map.on('load', () => {
         type: 'fill',
         source: 'feux_ancien',
         'source-layer': 'FEUX_ANCIENS_PROV',
-        paint: {
+        paint: { // So that the opacity changes when clicked and its clear the fire border
             'fill-color': '#ff0000',
             'fill-opacity': [
                 'case',
@@ -166,6 +166,7 @@ map.on('load', () => {
     fireLayersLoaded = true;
     updateMapYearFilter(selectedFireYears);
 
+    // Function to highlight the fire when it is clicked: helps with communication of the map.
     let selectedFire = null;
     function highlightFire(feature, source, sourceLayer) {
         if (selectedFire) {
@@ -264,16 +265,13 @@ function updateMapYearFilter(years, allYears = availableFireYears) {
 
     const filter = years.length === allYears.length
         ? null
-        : [
-            'in',
-            [
-                'coalesce',
-                ['to-number', ['get', 'an_origine']],
-                ['to-number', ['get', 'exercice']],
-                -1
-            ],
-            ['literal', years]
-        ];
+        : years.length === 0
+            ? ['==', 'exercice', '__no_year_selected__']
+            : [
+                'in',
+                'exercice',
+                ...years.map(String)
+            ];
 
     fireLayerIds.forEach((layerId) => {
         if (map.getLayer(layerId)) {
