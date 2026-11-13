@@ -103,6 +103,7 @@ body.map-page .site-header {
     top: 1rem;
     left: 1rem;
     z-index: 4;
+    max-height: calc(100% - 2rem);
 }
 
 .toggler-header {
@@ -155,8 +156,10 @@ body.map-page .site-header {
   flex-direction: column;
   gap: 0.65rem;
   width: min(20rem, calc(100vw - 3rem));
+  max-height: max(8rem, calc(100dvh - 10rem));
   margin-top: 0.5rem;
   padding: 0.85rem;
+  overflow-y: auto;
   border: 1px solid var(--border);
   border-radius: 0.6rem;
   background: rgb(255 255 255 / 95%);
@@ -322,6 +325,15 @@ body.map-page .site-header {
     gap: 0.75rem;
 }
 
+.map-fire-statistics {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 3;
+    max-width: calc(100% - 2rem);
+    pointer-events: none;
+}
+
 .fire-count-box,
 .hectares-count-box {
     display: grid;
@@ -332,6 +344,7 @@ body.map-page .site-header {
     background: rgb(246, 250, 255);
     border-radius: 3px;
     border-color: #1f2d5a;
+    box-shadow: 0 4px 14px rgb(20 39 86 / 18%);
 }
 
 .fire-count-title {

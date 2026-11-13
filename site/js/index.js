@@ -81,7 +81,7 @@ map.on('load', () => {
         },
         'paint': {
             'line-color': '#691cc8',
-            'line-width': 0.8
+            'line-width': 0.5
         }
     });
     map.on('click', 'watersheds-hit-area', (e) => {
@@ -116,7 +116,7 @@ map.on('load', () => {
         },
         'paint': {
             'line-color': '#000000',
-            'line-width': 1.2
+            'line-width': 0.8
         }
     });
     // fires layer

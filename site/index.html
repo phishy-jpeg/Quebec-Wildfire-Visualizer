@@ -29,6 +29,18 @@
                 <div id="fire-data-status" class="fire-data-status" role="status" aria-live="polite">
                     Loading wildfire data…
                 </div>
+                <div class="fire-statistics map-fire-statistics" aria-label="Fire statistics for selected years">
+                    <aside class="fire-count-box">
+                        <span class="fire-count-title">Total fires</span>
+                        <output id="fire-count-value">113,032</output>
+                        <span class="fire-count-footer">Across selected years</span>
+                    </aside>
+                    <aside class="hectares-count-box">
+                        <span class="fire-count-title">Total hectares burned</span>
+                        <output id="hectares-count-value">30,407,601.3</output>
+                        <span class="fire-count-footer">Across selected years</span>
+                    </aside>
+                </div>
                 <!---------------- FILTERS SECTION ------------------->
                 <div id="map-filters" class="map-filter">
                     <div id="toggle-header" class="toggler-header">
@@ -59,19 +71,6 @@
                                 <ul id="year-options" class="year-options"></ul>
                                 <button id="clear-year-selection" class="button-secondary" type="button">Clear selection</button>
                                 <button id="clear-year-filter" class="button-secondary" type="button">Show all years</button>
-                                <div class="fire-statistics">
-                                    <!--- TODO: why do I even have this in the html???? Make it purely a js function -->
-                                    <aside class="fire-count-box">
-                                        <span class="fire-count-title">Total fires</span>
-                                        <output id="fire-count-value">113,032</output>
-                                        <span class="fire-count-footer">Across selected years</span>
-                                    </aside>
-                                    <aside class="hectares-count-box">
-                                        <span class="fire-count-title">Total hectares burned</span>
-                                        <output id="hectares-count-value">30,407,601.3</output>
-                                        <span class="fire-count-footer">Across selected years</span>
-                                    </aside>
-                                </div>                                
                             </div>
                         </div>
                         <div class="size-filter-section">
