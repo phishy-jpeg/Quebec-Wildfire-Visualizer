@@ -100,6 +100,14 @@ How does the years selected keep synchronized across both the graph and the map?
 2. Improve site usability based on the results for the testing session. 
 3. Add data for the rest of Canada, and allow the user to sort by province (this may be done after the class is done.)
 
+## A3 Part 3
+Evidence: Both of my two single testers were unable to complete the task. 
+
+|#| What they did (evidence) | What I expected | Severity | My Change | Recheck Result | 
+|-----|-----|------|------|------|------| 
+| 3 | Looked around the map, went to the graphs page, looked around, clicked on the graph, and saw it says number of fires each year, but could not find the total amount of fires over the time span. | The user would scroll down in the filters tab and see the full number of fires that happened over the selected years. | 3 | I moved the "Total fires" and "Total hectares burned" boxes to a clear spot on the map, from their hidden placemenet in the filter section | I gave the tast to a friend and they were able to complete it quickly and without hesitation: fixed | 
+
+My c
 ## Sources
 - Forest fires since 1976: Ministère des Ressources naturelles et des Forêts (MRNF), https://www.donneesquebec.ca/recherche/dataset/feux-de-foret
     - License: CC BY 4.0.
