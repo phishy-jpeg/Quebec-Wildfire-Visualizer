@@ -107,6 +107,15 @@ Evidence: Both of my two single testers were unable to complete the task.
 |-----|-----|------|------|------|------| 
 | 3 | Looked around the map, went to the graphs page, looked around, clicked on the graph, and saw it says number of fires each year, but could not find the total amount of fires over the time span. | The user would scroll down in the filters tab and see the full number of fires that happened over the selected years. | 3 | I moved the "Total fires" and "Total hectares burned" boxes to a clear spot on the map, from their hidden placemenet in the filter section | I gave the tast to a friend and they were able to complete it quickly and without hesitation: fixed | 
 
+## What my map remembers
+For lab 9, I chose lane B2. Once the user zooms into a certain fire, when the user retruns to the site it will be at the same zoom level. This suits my readers because it will allow users to rememeber where they are looking in the map, without having to find it again. 
+
+The data for this is stored in the users local storage on their broswer. 
+
+The clear the information the user has a "reset view" button they are able to click.
+
+For this implementation the remember.js file does the work. One thing I understand about how this works, is that the webstie creates a storage key that is stored locally in the users browser When the map is loaded in the broswe, the site then calls for that storage key, and resets the maps view from what is stored in that key. 
+
 ## Sources
 - Forest fires since 1976: Ministère des Ressources naturelles et des Forêts (MRNF), https://www.donneesquebec.ca/recherche/dataset/feux-de-foret
     - License: CC BY 4.0.
