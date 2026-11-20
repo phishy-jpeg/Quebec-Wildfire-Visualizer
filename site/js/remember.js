@@ -41,10 +41,15 @@ function geog464Save(key, value) {
 // ---------- 1. A saved view ----------
 export function rememberView(map) {
     const key = geog464StorageKey("view");
-    const home = { center: map.getCenter(), zoom: map.getZoom() };   // the view your code set
+    const home = { 
+        center: map.getCenter(), 
+        zoom: map.getZoom() };   // the view your code set
     const saved = geog464Load(key, null);
     if (saved && typeof saved.lat === "number" && typeof saved.lng === "number" && typeof saved.zoom === "number") {
-        map.flyTo([saved.lat, saved.lng], saved.zoom);                // reopen where the reader left it
+        map.flyTo({
+            center: [saved.lng, saved.lat],
+            zoom: saved.zoom
+        });             // reopen where the reader left it
     }
     map.on("moveend", () => {
         const c = map.getCenter();
@@ -54,6 +59,9 @@ export function rememberView(map) {
         onAdd(map) {
             this.map = map;
 
+            const container = document.createElement("div");
+            container.className = "maplibregl-ctrl";
+            
             const b = document.createElement("button");
 
             b.className = "geog464-reset";
@@ -61,20 +69,25 @@ export function rememberView(map) {
             b.textContent = "Reset view";
 
             b.style.cssText = `
-            background: #fff;
-            border: 2px solid rgba(0,0,0,.25);
-            border-radius: 6px;
-            padding: 6px 10px;
-            font: 14px Arial, sans-serif;
-            cursor: pointer;
+                background: #fff;
+                border: 2px solid rgba(0,0,0,.25);
+                border-radius: 6px;
+                padding: 6px 10px;
+                font: 14px Arial, sans-serif;
+                cursor: pointer;
             `;
 
-            b.addEventListener("click", () => {
-            map.flyTo({
-                center: home.center,
-                zoom: home.zoom
-            });
-            });
+            b.onclick = function(e) {
+                console.log("BUTTON CLICKED");
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                map.jumpTo({
+                    center: [home.center.lng, home.center.lat],
+                    zoom: home.zoom
+                });
+            };
             this.container = b;
             return b;
         }
