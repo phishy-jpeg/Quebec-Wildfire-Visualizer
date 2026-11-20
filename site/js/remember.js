@@ -61,7 +61,7 @@ export function rememberView(map) {
 
             const container = document.createElement("div");
             container.className = "maplibregl-ctrl";
-            
+
             const b = document.createElement("button");
 
             b.className = "geog464-reset";
@@ -78,7 +78,6 @@ export function rememberView(map) {
             `;
 
             b.onclick = function(e) {
-                console.log("BUTTON CLICKED");
 
                 e.preventDefault();
                 e.stopPropagation();
@@ -88,8 +87,9 @@ export function rememberView(map) {
                     zoom: home.zoom
                 });
             };
+            container.appendChild(b);
             this.container = b;
-            return b;
+            return container;
         }
 
         onRemove() {
