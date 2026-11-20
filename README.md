@@ -107,7 +107,6 @@ Evidence: Both of my two single testers were unable to complete the task.
 |-----|-----|------|------|------|------| 
 | 3 | Looked around the map, went to the graphs page, looked around, clicked on the graph, and saw it says number of fires each year, but could not find the total amount of fires over the time span. | The user would scroll down in the filters tab and see the full number of fires that happened over the selected years. | 3 | I moved the "Total fires" and "Total hectares burned" boxes to a clear spot on the map, from their hidden placemenet in the filter section | I gave the tast to a friend and they were able to complete it quickly and without hesitation: fixed | 
 
-My c
 ## Sources
 - Forest fires since 1976: Ministère des Ressources naturelles et des Forêts (MRNF), https://www.donneesquebec.ca/recherche/dataset/feux-de-foret
     - License: CC BY 4.0.

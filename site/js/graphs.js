@@ -72,7 +72,7 @@ fireChart = new Chart(document.getElementById('fire-graph'), {
                     text: 'Number of fires'
                 }
             },
-            y1: { // Second y scale 
+            y1: { // Second y scale script>addMemory(map);</script>
                 beginAtZero: true,
                 position: 'right',
                 grid: {

@@ -103,7 +103,6 @@ body.map-page .site-header {
     top: 1rem;
     left: 1rem;
     z-index: 4;
-    max-height: calc(100% - 2rem);
 }
 
 .toggler-header {
@@ -156,10 +155,8 @@ body.map-page .site-header {
   flex-direction: column;
   gap: 0.65rem;
   width: min(20rem, calc(100vw - 3rem));
-  max-height: max(8rem, calc(100dvh - 10rem));
   margin-top: 0.5rem;
   padding: 0.85rem;
-  overflow-y: auto;
   border: 1px solid var(--border);
   border-radius: 0.6rem;
   background: rgb(255 255 255 / 95%);

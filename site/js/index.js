@@ -1,6 +1,5 @@
 import * as maplibregl from 'https://unpkg.com/maplibre-gl@6.12.0/dist/maplibre-gl.mjs';
 import { initializeYearFilter } from './year-filter.js';
-import { addMemory } from '../memory.js';
 // TODO: THIS CODE IS A MESS ORGANIZE IT BETTER 
 // TODO: Add new layer for the fire layers, since the current one does not have unique ID's.
 // **********************************************************************************************
@@ -28,8 +27,6 @@ const map = new maplibregl.Map({
     // Maptoolkit's terms require its credit to stay fully visible.
     attributionControl: { compact: false },
 });
-// Adding memory to my map 
-addMemory(map);
 // Adding a scale 
 const scale = new maplibregl.ScaleControl({
   unit: 'metric'       
