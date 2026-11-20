@@ -40,46 +40,51 @@ function geog464Save(key, value) {
 
 // ---------- 1. A saved view ----------
 export function rememberView(map) {
-  const key = geog464StorageKey("view");
-  const home = { center: map.getCenter(), zoom: map.getZoom() };   // the view your code set
-  const saved = geog464Load(key, null);
-  if (saved && typeof saved.lat === "number" && typeof saved.lng === "number" && typeof saved.zoom === "number") {
-    map.flyTo([saved.lat, saved.lng], saved.zoom);                // reopen where the reader left it
-  }
-  map.on("moveend", () => {
-    const c = map.getCenter();
-    geog464Save(key, { lat: Math.round(c.lat * 1e5) / 1e5, lng: Math.round(c.lng * 1e5) / 1e5, zoom: map.getZoom() });
-  });
-  /*const Reset = maplibregl.Control.extend({
-    onAdd() {
-      const b = L.DomUtil.create("button", "geog464-reset");
-      b.type = "button"; b.textContent = "Reset view";
-      b.style.cssText = "background:#fff;border:2px solid rgba(0,0,0,.25);border-radius:6px;padding:6px 10px;font:14px Arial,sans-serif;cursor:pointer";
-      L.DomEvent.disableClickPropagation(b);
-      b.addEventListener("click", () => map.setView(home.center, home.zoom));
-      return b;
+    const key = geog464StorageKey("view");
+    const home = { center: map.getCenter(), zoom: map.getZoom() };   // the view your code set
+    const saved = geog464Load(key, null);
+    if (saved && typeof saved.lat === "number" && typeof saved.lng === "number" && typeof saved.zoom === "number") {
+        map.flyTo([saved.lat, saved.lng], saved.zoom);                // reopen where the reader left it
     }
-  });*/
-  class CustomExpandControl {
-    onAdd(map) {
-        this._map = map;
-        this._containter = document.createElement('div');
+    map.on("moveend", () => {
+        const c = map.getCenter();
+        geog464Save(key, { lat: Math.round(c.lat * 1e5) / 1e5, lng: Math.round(c.lng * 1e5) / 1e5, zoom: map.getZoom() });
+    });
+    class Reset {
+        onAdd(map) {
+            this.map = map;
 
-        const b = document.createElement("button");
-        b.type = 'button';
-        b.textContent = "Reset view";
-        b.style.cssText = "background:#fff;border:2px solid rgba(0,0,0,.25);border-radius:6px;padding:6px 10px;font:14px Arial,sans-serif;cursor:pointer";
-        b.addEventListener("click", () => map.setView(home.center, home.zoom));
+            const b = document.createElement("button");
 
-        this._container.appendChild(button);
-        return this._container;
-    }
-    onRemove() {
-        this._container.parentNode.removeChild(this._container);
-        this._map = undefined;
+            b.className = "geog464-reset";
+            b.type = "button";
+            b.textContent = "Reset view";
+
+            b.style.cssText = `
+            background: #fff;
+            border: 2px solid rgba(0,0,0,.25);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font: 14px Arial, sans-serif;
+            cursor: pointer;
+            `;
+
+            b.addEventListener("click", () => {
+            map.flyTo({
+                center: home.center,
+                zoom: home.zoom
+            });
+            });
+            this.container = b;
+            return b;
+        }
+
+        onRemove() {
+            this.container.remove();
+            this.map = undefined;
         }
     }
-    map.addControl(new CustomExpandControl(), 'top-right');
+    map.addControl(new Reset(), "bottom-left");
 }
 // ---------- 2. Favourites or progress ----------
 export function rememberMarks(map, layer, options) {
